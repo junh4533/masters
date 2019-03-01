@@ -1,0 +1,71 @@
+{% extends 'scheduling/base.html' %} <!-- Links layout.html as a HTML template -->
+{% load crispy_forms_tags %}
+{% block content %}
+    {% if user.is_authenticated%}    <!--check for login-->
+
+        <div class="row">
+            <div class="container col-2 col-lg-3"></div>
+
+            <div class="container col-8 col-lg-6 box">
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs nav-fill" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#upload">Upload File</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#view_videos">View existing videos</a>
+                    </li>
+                </ul>
+
+                
+                <div class="tab-content jumbotron form_container">
+                    <!-- upload pane -->
+                    <div id="upload" class="container tab-pane active"><br>
+                        <h1>Upload</h1>
+                        <div class="progress">
+                            <div id="tv1" class="progress-bar bg-success" role="progressbar" style="width: 25%">TV1</div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%">TV2</div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%">TV3</div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%">TV4</div>
+                        </div>
+                        <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+                             {{ form|crispy }} 
+                             <button type="submit" class="btn btn-primary">Upload</button>
+                             </p>
+                        </form>
+                    </div>
+
+                    <!-- view existing videos pane -->
+                    <div id="view_videos" class="container tab-pane"><br>
+                        <h1>View</h1>
+                        <form>
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Select a TV
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="video1">TV 1</a>
+                                <a class="dropdown-item" href="video2">TV 2</a>
+                                <a class="dropdown-item" href="video3">TV 3</a>
+                                <a class="dropdown-item" href="video4">TV 4</a>
+                            </div>
+                        </div>
+                        {% comment %} <br> {% endcomment %}
+                        {% comment %} <video id="tv_video" width="700" height="400" controls="controls" autoplay loop>
+                            <source id="player" src="" type="video/mp4" />
+                            Hello
+                        </video> {% endcomment %}
+                    </div>
+
+                    <a href="{% url 'logout' %}">logout</a> <!-- log OUT button -->
+                </div>
+
+            </div>
+
+            <div class="container col-2 col-lg-3"></div>
+        </div>
+    {% else %}
+        <script>window.location.href = "../accounts/login/"</script>
+    {% endif %}
+{% endblock %}

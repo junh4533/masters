@@ -1,0 +1,73 @@
+body{
+  /* background-color: rgb(238, 199, 222); */
+  background-image: url('../images/login_bg_no_logo.png');
+  background-size: cover;
+}
+
+.tint {
+  z-index: -999;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  overflow: auto;
+  top: 0px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.4); /*can be anything, of course*/
+}
+
+#header{
+  background-color: #007bff;
+  height: 10%;
+}
+
+.box{
+  position: relative;
+  margin-top: 10vh;
+  color: #E5E4E2;
+}
+
+.form_container{
+  /* padding-bottom: 20px; */
+  padding:0 0 20px 0;
+}
+
+#login_jumbo{
+  box-shadow: 10px 10px rgba(17,22,34,0.6);
+}
+.form-group{
+  padding: 0 10% 0 10%;
+}
+
+.tab-content.jumbotron {
+  border-radius: 0 0 .3rem .3rem;
+  /* max-height:70vh; */
+} 
+
+.center_button{
+  text-align:center;
+  display: block;
+}
+
+#tv_video{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
+
+/* bootstrap */
+.col-8{
+  text-align: center;
+} 
+
+.row{
+margin-right: 0;
+margin-left: 0;
+z-index:999;
+}
+
+.jumbotron{
+  /* background-color:#2B3856; */
+  background-color:rgba(17,22,34,0.3);
+}

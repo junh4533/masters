@@ -25,8 +25,8 @@ SECRET_KEY = 'g==z500lcb7l5(4&obt#g0+o$4#%l#o$7q^8%-nu*2rdp8y-7u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+#allow all IP addresses to access this app
+ALLOWED_HOSTS = ['*'] 
 
 # Application definition
 
@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'scheduling',
+    'phonenumber_field',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -51,10 +54,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'masters.urls'
 
+#CSS template for crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4' 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,13 +105,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 
@@ -118,3 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# login 
+LOGIN_REDIRECT_URL = '../../'
+
+#logout
+LOGOUT_REDIRECT_URL = '../../'
+
