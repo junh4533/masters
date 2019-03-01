@@ -1,16 +1,16 @@
 # users/forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser
+from .models import Patient
 
 class CustomUserCreationForm(UserCreationForm):
-
     class Meta(UserCreationForm):
-        model = CustomUser
-        fields = ('username', 'email')
+        model = Patient
+        fields = ('username','email','pid','patient_fn','patient_ln','phone')
 
+#allow the admin to change patient credentials
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
-        model = CustomUser
+        model = Patient
         fields = UserChangeForm.Meta.fields

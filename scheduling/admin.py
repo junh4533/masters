@@ -2,19 +2,19 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
-from scheduling.models import Doctor, Patient, Appointment
+from scheduling.models import Doctor, Appointment
+# from scheduling.models import Doctor, Patient, Appointment
 
-# from .forms import CustomUserCreationForm, CustomUserChangeForm
-# from .models import CustomUser
+from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .models import Patient
 
-# class CustomUserAdmin(UserAdmin):
-#     model = CustomUser
-#     add_form = CustomUserCreationForm
-#     form = CustomUserChangeForm
-
-# admin.site.register(CustomUser, CustomUserAdmin)
 # Register the models so that they appear as tables in Django admin
 
-admin.site.register(Doctor)
+class CustomUserAdmin(UserAdmin):
+    model = Patient
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+
 admin.site.register(Patient)
+admin.site.register(Doctor)
 admin.site.register(Appointment)

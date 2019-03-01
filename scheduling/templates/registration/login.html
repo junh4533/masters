@@ -14,11 +14,12 @@
           <h2>Mass Portal</h2>
         </div>
         <img src="../../static/images/bearcat2.png" >
+        <h2>Login</h2>
         <form method="post">
           {% csrf_token %} <!-- for security -->
           {{ form|crispy }} 
           <button type="submit" class="btn btn-primary">Login</button>
-        </form>    
+        </form>   
       </div>
   </div>
 

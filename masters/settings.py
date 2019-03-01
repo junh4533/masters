@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'crispy_forms',
 ]
 
+AUTH_USER_MODEL = 'scheduling.Patient'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
