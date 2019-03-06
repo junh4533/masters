@@ -1,0 +1,17 @@
+{% extends 'scheduling/base.html' %} <!-- Links layout.html as a HTML template -->
+{% load crispy_forms_tags %}
+{% block content %}
+    {% if user.is_authenticated%}    <!--check for login-->
+        <div id="header">
+            <h4>Welcome, Dr.</h4>
+            <a href="" id="logout_icon"> 
+                Logout
+                <span >
+                    <i class="fas fa-sign-out-alt"></i>
+                </span>
+            </a>
+        </div>
+    {% else %}
+    <script>window.location.href = "../accounts/login/"</script>
+    {% endif %}
+{% endblock %}
