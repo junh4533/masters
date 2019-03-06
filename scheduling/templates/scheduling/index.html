@@ -4,12 +4,7 @@
     {% if user.is_authenticated%}    <!--check for login-->
     <div id="header">
         <h4>Welcome, Dr.</h4>
-        <a href="" id="logout_icon"> 
-            Logout
-            <span >
-                <i class="fas fa-sign-out-alt"></i>
-            </span>
-        </a>
+        <a href="" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
     </div>
         <div class="row" id="preview_row">
 
@@ -60,7 +55,7 @@
             
             <!-- Appointments -->
             <div class="col-3 icon_box" id="icon1"> 
-                <a href="#">
+                <a href="appointments">
                     <span class="icon">
                         <i class="fas fa-calendar-alt"></i>
                     </span>
@@ -70,7 +65,7 @@
 
             <!-- Patients -->
             <div class="col-3 icon_box" id="icon2"> 
-                <a href="#">
+                <a href="patients">
                     <span class="icon">
                         <i class="fas fa-users"></i>
                     </span>
@@ -79,7 +74,7 @@
             </div>
 
             <div class="col-3 icon_box" id="icon3"> 
-                <a href="#">
+                <a href="reports">
                     <span class="icon">
                         <i class="fas fa-newspaper"></i>
                     </span>
@@ -89,7 +84,7 @@
 
             <!-- Settings -->
             <div class="col-3 icon_box" id="icon4"> 
-                <a href="#">
+                <a href="settings">
                     <span class="icon">
                         <i class="fas fa-cogs"></i>
                     </span>
