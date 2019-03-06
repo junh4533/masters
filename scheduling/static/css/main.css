@@ -1,18 +1,6 @@
 body{
-  /* background-color: rgb(238, 199, 222); */
-  background-image: url('../images/login_bg_no_logo.png');
-  background-size: cover;
-}
-
-.tint {
-  z-index: -999;
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  overflow: auto;
-  top: 0px;
-  left: 0px;
-  background: rgba(0, 0, 0, 0.4); /*can be anything, of course*/
+  /* background-color: #EADEDB; */
+  background-color: #e6e6fa;
 }
 
 #header{
@@ -27,7 +15,6 @@ body{
 }
 
 .form_container{
-  /* padding-bottom: 20px; */
   padding:0 0 20px 0;
 }
 
@@ -40,7 +27,6 @@ body{
 
 .tab-content.jumbotron {
   border-radius: 0 0 .3rem .3rem;
-  /* max-height:70vh; */
 } 
 
 .center_button{
@@ -48,26 +34,94 @@ body{
   display: block;
 }
 
-#tv_video{
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%; 
-  min-height: 100%;
-}
-
 /* bootstrap */
-.col-8{
-  text-align: center;
+.col-3{
+  padding: 0 0 0 0;
 } 
 
-.row{
-margin-right: 0;
-margin-left: 0;
-z-index:999;
+.jumbotron{
+  background-color: #133337;
 }
 
-.jumbotron{
-  /* background-color:#2B3856; */
-  background-color:rgba(17,22,34,0.3);
+.row{
+  margin: 0 0 0 0;
+}
+
+#icon_row{
+  width:80%;
+  margin:auto;
+}
+
+#preview_row{
+  width:80%;
+  margin:auto;
+  text-align:center;
+}
+
+#patients{
+
+}
+
+#appointments{
+
+}
+
+/* icon css */
+.icon{
+  font-size:125px;
+  color: white;
+  text-align:center;
+}
+
+.icon_box{
+  text-align:center;
+  /* margin:2px; */
+  /* padding: 0 5px 0 5px;  */
+  border: 10px solid transparent;
+  background-clip:padding-box;
+}
+
+.icon_box:hover{
+  opacity: 0.7;
+}
+
+#icon1{
+  background-color: rgb(59, 89, 152);
+}
+
+#icon2{
+  background-color: rgb(255, 165, 0);
+}
+
+#icon3{
+  background-color: rgb(255, 64, 64);
+}
+
+#icon4{
+  background-color:#ff7f50;
+}
+
+.icon_description{
+  background-color: inherit;
+  width:100%;
+  height: 20%;
+  filter: brightness(.8);
+  font-size:30px;
+}
+
+#header{
+  width:100%;
+  height: 5vh;
+  background-color:#0E2F44;
+  color: #f5f5f5;
+}
+
+#header > *{
+  display: inline;
+}
+
+#logout_icon{
+  font-size:20px;
+  padding-right: 5px;
+  float: right;
 }

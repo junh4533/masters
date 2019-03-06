@@ -6,7 +6,7 @@ from .models import Patient
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm):
         model = Patient
-        fields = ('username','email','pid','patient_fn','patient_ln','phone')
+        fields = ('username','email','pid','patient_fn','patient_ln')
 
 #allow the admin to change patient credentials
 class CustomUserChangeForm(UserChangeForm):
