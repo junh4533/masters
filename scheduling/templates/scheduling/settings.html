@@ -4,7 +4,7 @@
     {% if user.is_authenticated%}    <!--check for login-->
         <div id="header">
             <h4>Welcome, Dr.</h4>
-            <a href="" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
+            <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
         </div>
 
     {% else %}

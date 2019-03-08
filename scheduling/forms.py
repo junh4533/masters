@@ -3,14 +3,14 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Patient
 
-class CustomUserCreationForm(UserCreationForm):
+#form to create a new patient
+class PatientCreationForm(UserCreationForm):
     class Meta(UserCreationForm):
         model = Patient
-        fields = ('username','email','pid','patient_fn','patient_ln')
+        fields = ('pid','patient_fn','patient_ln','phone','email',)
 
-#allow the admin to change patient credentials
-class CustomUserChangeForm(UserChangeForm):
-
+#allows the admin to change patient credentials
+class PatientChangeForm(UserChangeForm):
     class Meta:
         model = Patient
         fields = UserChangeForm.Meta.fields
