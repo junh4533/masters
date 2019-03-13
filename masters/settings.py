@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -38,11 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'scheduling',
-    'phonenumber_field',
     'crispy_forms',
 ]
 
-AUTH_USER_MODEL = 'scheduling.Patient'
+AUTH_USER_MODEL = 'scheduling.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -129,11 +127,8 @@ STATIC_URL = '/static/'
 # login 
 LOGIN_REDIRECT_URL = '../../'
 
-#logout
+#redirect to login page
 LOGOUT_REDIRECT_URL = 'login'
 
-PHONENUMBER_DB_FORMAT = 'NATIONAL'
-
-PHONENUMBER_DEFAULT_REGION = 'US'
 
 

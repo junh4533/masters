@@ -1,6 +1,6 @@
-{% extends 'scheduling/base.html' %} <!-- Links layout.html as a HTML template -->
+{% extends 'scheduling/base.html' %} <!-- Links base.html as a HTML template -->
 {% load static %}
-{% load scheduling_tags %}
+{% comment %} {% load scheduling_tags %} {% endcomment %}
 <link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css"/>
 {% load crispy_forms_tags %}
 
@@ -8,11 +8,11 @@
     {% if user.is_authenticated%}    <!--check for login-->
         <!-- Header -->
         <div id="header">
-            {% if request.user|has_group:"Doctors" %}
-    <p>User belongs to my group
-{% else %}
-    <p>User doesn't belong to doctors</p>
-{% endif %}
+      {% comment %} {% if request.user|has_group:"Patients" %}
+        <p>User belongs to patients
+    {% else %}
+        <p>User doesn't belong to patients</p>
+    {% endif %} {% endcomment %}
             <h4>Welcome, Dr.</h4>
             <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
         </div>

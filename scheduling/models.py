@@ -1,43 +1,59 @@
 #contains all the models and database structure
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 from datetime import *
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group, User, Permission
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser
 
-class Patient(AbstractUser):
-    pid = models.AutoField(primary_key=True) #patient identification
-    patient_fn = models.CharField(max_length=30)
-    patient_ln = models.CharField(max_length=30)
-    phone = PhoneNumberField(unique=True)
-    email = models.EmailField(max_length=70, unique=True)
+class User(AbstractUser):
+    is_doctor = models.BooleanField(default=False)
+    is_patient = models.BooleanField(default=False)
 
+class Patient(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user.is_patient = True
+    username = models.CharField(max_length=50)
+    pid = models.AutoField(unique=True, primary_key=True) #patient identification
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    phone = models.CharField(max_length=10)
+    email = models.EmailField(max_length=70, unique=True)
+    active = models.BooleanField(default=True)
+
+    REQUIRED_FIELDS = ('username')
+    USERNAME_FIELD = 'username'
     #gives the patient object his/her name
     def __str__(self):
-        return self.patient_fn  + " " + self.patient_ln
+        return self.first_name  + " " + self.last_name
 
 class Doctor(models.Model):
-    upin = models.AutoField(primary_key=True) #unique physician identification number
-    doctor_fn = models.CharField(max_length=30)
-    doctor_ln = models.CharField(max_length=30)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user.is_doctor = True
+    upin = models.AutoField(unique=True, primary_key=True) #unique physician identification number
+    username = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     expertise = models.CharField(max_length=20)
-    phone = PhoneNumberField(unique=True)
+    phone = models.CharField(max_length=10)
     email = models.EmailField(max_length=70, unique=True)
     start_time = models.DateTimeField(null=True)
     end_time = models.DateTimeField(null=True)
     days_available = models.DateTimeField(null=True)
+    active = models.BooleanField(default=True)
+
+    REQUIRED_FIELDS = ('username')
+    USERNAME_FIELD = 'username'
 
     # gives the doctor object his/her name
     def __str__(self):
-        return self.doctor_fn + " " + self.doctor_ln
-        doctor_group = Group.objects.get(name='Doctors') 
-        doctor_group.user_set.add(self)
+        return self.first_name  + " " + self.last_name
+        # doctor_group = Group.objects.get(name='Doctors') 
+        # doctor_group.user_set.add(self)
 
 class Appointment(models.Model):
-    patient = models.ForeignKey(Patient,on_delete="DO_NOTHING")
-    doctor = models.ForeignKey(Doctor,on_delete="DO_NOTHING")
+    patient = models.ForeignKey(Patient, related_name='patient_appointment', on_delete="DO_NOTHING")
+    doctor = models.ForeignKey(Doctor, related_name='doctor_appointment', on_delete="DO_NOTHING")
     start_time = models.DateTimeField(null=True)
     end_time = models.DateTimeField(null=True)
 

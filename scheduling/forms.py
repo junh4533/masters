@@ -1,16 +1,16 @@
 # users/forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Patient
+from .models import Patient, Doctor, Appointment, User
 
 #form to create a new patient
-class PatientCreationForm(UserCreationForm):
+class UserCreationForm(UserCreationForm):
     class Meta(UserCreationForm):
-        model = Patient
-        fields = ('pid','patient_fn','patient_ln','phone','email',)
+        model = User
+        fields = ('first_name','last_name','email','username')
 
 #allows the admin to change patient credentials
-class PatientChangeForm(UserChangeForm):
+class UserChangeForm(UserChangeForm):
     class Meta:
-        model = Patient
-        fields = UserChangeForm.Meta.fields
+        model = User
+        fields = ('first_name','last_name','email','username')
