@@ -1,10 +1,15 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
-from .forms import UserCreationForm
+from .forms import UserCreationForm, DoctorCreationForm, DoctorChangeForm, PatientCreationForm, PatientChangeForm
 
-class SignUp(generic.CreateView):
-    form_class = UserCreationForm
+class DoctorSignUp(generic.CreateView):
+    form_class = DoctorCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'registration/signup.html'
+
+class PatientSignUp(generic.CreateView):
+    form_class = PatientCreationForm
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 

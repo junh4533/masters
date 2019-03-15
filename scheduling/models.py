@@ -9,57 +9,37 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     is_doctor = models.BooleanField(default=False)
     is_patient = models.BooleanField(default=False)
-
-class Patient(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    user.is_patient = True
-    username = models.CharField(max_length=50)
-    pid = models.AutoField(unique=True, primary_key=True) #patient identification
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    phone = models.CharField(max_length=10)
-    email = models.EmailField(max_length=70, unique=True)
     active = models.BooleanField(default=True)
+    phone = models.CharField(max_length=10)
+    id = models.IntegerField(unique=True, primary_key=True)
+    phone = models.CharField(max_length=10)
+    specialty = models.CharField(max_length=20)
+    # start_time = models.TimeField(null=True)
+    # end_time = models.TimeField(null=True)
+    # days_available = models.DateTimeField(null=True)
+    appointments_per_day = models.IntegerField(null=True,max_length=1)
 
-    REQUIRED_FIELDS = ('username')
-    USERNAME_FIELD = 'username'
-    #gives the patient object his/her name
     def __str__(self):
         return self.first_name  + " " + self.last_name
-
-class Doctor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    user.is_doctor = True
-    upin = models.AutoField(unique=True, primary_key=True) #unique physician identification number
-    username = models.CharField(max_length=50)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    expertise = models.CharField(max_length=20)
-    phone = models.CharField(max_length=10)
-    email = models.EmailField(max_length=70, unique=True)
-    start_time = models.DateTimeField(null=True)
-    end_time = models.DateTimeField(null=True)
-    days_available = models.DateTimeField(null=True)
-    active = models.BooleanField(default=True)
-
-    REQUIRED_FIELDS = ('username')
-    USERNAME_FIELD = 'username'
-
-    # gives the doctor object his/her name
-    def __str__(self):
-        return self.first_name  + " " + self.last_name
-        # doctor_group = Group.objects.get(name='Doctors') 
-        # doctor_group.user_set.add(self)
 
 class Appointment(models.Model):
-    patient = models.ForeignKey(Patient, related_name='patient_appointment', on_delete="DO_NOTHING")
-    doctor = models.ForeignKey(Doctor, related_name='doctor_appointment', on_delete="DO_NOTHING")
-    start_time = models.DateTimeField(null=True)
-    end_time = models.DateTimeField(null=True)
+    TIMESLOT_LIST = (
+        (1, '10:00 – 11:00'),
+        (2, '11:00 – 12:00'),
+        (3, '12:00 – 13:00'),
+        (4, '13:00 – 14:00'),
+        (5, '14:00 – 15:00'),
+        (6, '15:00 – 16:00'),
+        (7, '16:00 – 17:00'),
+        (8, '17:00 – 18:00'),
+        (8, '18:00 – 19:00'),
+    )
+
+    user = models.ManyToManyField(User, related_name='appointment')
+    timeslot = models.IntegerField(choices=TIMESLOT_LIST, null=True)
 
     def __str__(self):
-        return str(self.timeslot) + " - " + str(self.patient) + "- Dr. " + str(self.doctor)
-        
+        return str(self.timeslot)
 
 
 
