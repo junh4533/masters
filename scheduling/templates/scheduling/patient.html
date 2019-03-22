@@ -5,19 +5,19 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    {% if user.is_authenticated%}    <!--check for login-->
+    {% if user.is_authenticated and user.user_type == "patient" %} <!--check for login-->
         <!-- Header -->
         <div id="header">
-            <h4>Welcome, Assistant</h4>
+            <h4>Welcome, Patient</h4>
             <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
         </div>
 
         <!-- Sidebar -->
         <div id="sidebar">
-            <a href="appointments/">Appointments</a>
-            <a href="patients/">Patients</a>
-            <a href="reports/">Reports</a>
-            <a href="settings/">Setting</a>
+            <a href="../appointments/">Appointments</a>
+            <a href="../patients/">Patients</a>
+            <a href="../reports/">Reports</a>
+            <a href="../settings/">Setting</a>
         </div>
 
         <!-- Main content -->
@@ -26,7 +26,7 @@
             
             <!-- Appointments -->
             <div class="col-3 icon_box" id="icon1"> 
-                <a href="appointments">
+                <a href="../appointments">
                     <span class="icon">
                         <i class="fas fa-calendar-alt"></i>
                     </span>
@@ -36,7 +36,7 @@
 
             <!-- Patients -->
             <div class="col-3 icon_box" id="icon2"> 
-                <a href="Register">
+                <a href="../register">
                     <span class="icon">
                         <i class="fas fa-users"></i>
                     </span>
@@ -45,7 +45,7 @@
             </div>
 
             <div class="col-3 icon_box" id="icon3"> 
-                <a href="reports">
+                <a href="../reports">
                     <span class="icon">
                         <i class="fas fa-newspaper"></i>
                     </span>
@@ -55,7 +55,7 @@
 
             <!-- Settings -->
             <div class="col-3 icon_box" id="icon4"> 
-                <a href="settings">
+                <a href="../settings">
                     <span class="icon">
                         <i class="fas fa-cogs"></i>
                     </span>
@@ -65,6 +65,6 @@
 
         </div>
     {% else %}
-        <script>window.location.href = "../accounts/login/"</script>
+        <script>window.location.href = "../../accounts/login/"</script>
     {% endif %}
 {% endblock %}

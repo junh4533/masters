@@ -6,10 +6,11 @@
             <h4>Welcome,</h4>
             <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
         </div>
-         <button type="submit" class="btn btn-primary" onclick="window.location='make_appointment';">Make an appointment</button>
-          {% for appointment in data %}
-          <h1>  {{ appointment }}</h1>
-          {% endfor %}
+         <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+                {{ form|crispy }} 
+                <button type="submit" class="btn btn-primary">Signup</button>
+                </p>
+          </form>
     {% else %}
     <script>window.location.href = "../../accounts/login/"</script>
     {% endif %}

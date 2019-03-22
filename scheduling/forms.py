@@ -1,31 +1,31 @@
 # users/forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Appointment, User
+from .models import Appointment, User, Doctor, Patient
 
 #form to create a new patient
-class DoctorCreationForm(UserCreationForm):
+class CustomCreationForm(UserCreationForm):
     class Meta(UserCreationForm):
         model = User
-        fields = ('first_name','last_name','username','email','phone','id','specialty','appointments_per_day',)
-
-#allows the admin to change patient credentials
-class DoctorChangeForm(UserChangeForm):
+        fields = ('first_name','last_name','username','email','user_type',)
+        
+#allows the user to change their information
+class CustomChangeForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('first_name','last_name','username','email','phone','id','specialty','appointments_per_day',)
+        fields = ('username','email')
 
-#form to create a new patient
-class PatientCreationForm(UserCreationForm):
-    class Meta(UserCreationForm):
-        model = User
-        fields = ('first_name','last_name','username','email','phone','id',)
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
 
-#allows the admin to change patient credentials
-class PatientChangeForm(UserChangeForm):
+class DoctorForm(UserChangeForm):
     class Meta:
-        model = User
-        fields = ('first_name','last_name','username','email','phone','id',)
+        model = Doctor
+        # fields = ('specialty','start_time','end_time','days_available','appointments_per_hour',)
+        fields = ('user','specialty','appointments_per_hour',)
 
-
-
+class AppointmentForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ('doctor','patient','timeslot',)

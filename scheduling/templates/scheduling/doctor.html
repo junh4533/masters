@@ -1,0 +1,106 @@
+{% extends 'scheduling/base.html' %} <!-- Links base.html as a HTML template -->
+{% load static %}
+{% comment %} {% load scheduling_tags %} {% endcomment %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css"/>
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if user.is_authenticated and user.user_type == "doctor" %}  <!--check for login-->
+        <!-- Header -->
+        <div id="header">
+            <h4>Welcome, Doctor</h4>
+            <a href="{% url 'logout' %}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <a href="appointments/">Appointments</a>
+            <a href="patients/">Patients</a>
+            <a href="reports/">Reports</a>
+            <a href="settings/">Setting</a>
+        </div>
+
+        <!-- Main content -->
+        <div class="row" id="preview_row">
+
+            <div class="col-12" id="appointments"> 
+                <h1>Upcoming Appointments</h1>
+
+                <div class="container">        
+                    <table class="table table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th>PID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Timeslot</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>11111111</td>
+                                <td>John</td>
+                                <td>Doe</td>
+                                <td>john@example.com</td>
+                                <td>12:00-1:00</td>
+                            </tr>
+                            <tr>
+                                <td>22222222</td>
+                                <td>Mary</td>
+                                <td>Moe</td>
+                                <td>mary@example.com</td>
+                                 <td>1:00-2:00</td>
+                            </tr>
+                            <tr>
+                                <td>33333333</td>
+                                <td>July</td>
+                                <td>Dooley</td>
+                                <td>july@example.com</td>
+                                <td>2:00-3:00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+    
+            </div>
+        </div>
+        
+        <div class="row" id="icon_row">
+            
+            <!-- Appointments -->
+            <div class="col-3 icon_box" id="icon1"> 
+                <a href="appointments">
+                    <span class="icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </span>
+                </a>
+                <div class="icon_description">Appointments</div>
+            </div>
+
+            <!-- Patients -->
+            <div class="col-3 icon_box" id="icon2"> 
+                <a href="patients">
+                    <span class="icon">
+                        <i class="fas fa-users"></i>
+                    </span>
+                </a>
+                <div class="icon_description">Patients</div>
+            </div>
+
+            <!-- Settings -->
+            <div class="col-3 icon_box" id="icon4"> 
+                <a href="settings">
+                    <span class="icon">
+                        <i class="fas fa-cogs"></i>
+                    </span>
+                </a>
+                <div class="icon_description">Setting</div>
+            </div>
+
+        </div>
+    {% else %}
+        <script>window.location.href = "../../accounts/login/"</script>
+        {% comment %} {% url 'login' %} {% endcomment %}
+    {% endif %}
+{% endblock %}
