@@ -8,10 +8,8 @@ urlpatterns = [
     path('', views.index, name='index'), 
     path('add_user/', views.SignUp.as_view(), name='add_user'), 
     path('add_user/add_doctor/', views.AddDoctor.as_view(), name='add_doctor'), 
-    # path('add_user/add_doctor/', views.AddDoctor, name='add_doctor'), 
     path('doctor/', include(([
         path('appointments/', views.appointments, name='appointments'),
-        path('appointments/make_appointment', views.AppointmentForm.as_view(), name='make_appointments'),
         path('patients/', views.patients, name='patients'),
         path('reports/', views.reports, name='reports'),
         path('settings/', views.settings, name='settings'),

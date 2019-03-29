@@ -1,0 +1,61 @@
+body {
+    width: 100%;
+    height: 100%;
+    /* overflow: hidden; */
+}
+
+#background {
+    height: 92vh;
+    background-image: url("../images/doctor3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100vw 92vh;
+    /* background-size: auto; */
+    /* background-position: center; */
+    z-index: -999;
+    text-align: center;
+}
+
+#tint {
+    z-index: 0;
+    height: 92vh;
+    width: 100%;
+    position: absolute;
+    top: 8vh;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+#main_content{
+    z-index: 99999;
+    height: 50%;
+    width: 50%;
+    position: absolute;
+    top: 30%;
+    left: 5%;
+}
+
+#search {
+    width: 10vw;
+}
+
+.center {
+    text-align: center;
+}
+
+nav {
+    height: 8vh;
+}
+
+#slogan {
+    color: #7FDBFF;
+}
+
+#cancer{
+    color: white;
+}
+
+#slogan{
+    font-family: 'Encode Sans Expanded';
+    font-size:75px;
+}

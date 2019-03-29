@@ -67,7 +67,8 @@ def assistant_portal(request):
     return render(request, 'scheduling/assistant.html')
 
 def appointments(request):
-    data = Appointment.objects.get(patient=request.user)
+    # data = Appointment.objects.get(patient=request.user)
+    data = Appointment.objects.all()
     print(data)
     return TemplateResponse(request, 'scheduling/appointments.html', {"data" : data})
 

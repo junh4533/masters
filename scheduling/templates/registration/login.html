@@ -1,29 +1,132 @@
-{% extends 'scheduling/base.html' %} <!-- Links layout.html as a HTML template -->
+{% load staticfiles %}
+{% load static %}
 {% load crispy_forms_tags %}
-{% comment %} {%block title%} Login {%endblock%} {% endcomment %}
 
-{% block content %}
-<div class="tint"></div>
-<div class="row">
-  <div class="container col-2 col-lg-4"></div>
+<!DOCTYPE html>
+<html lang="en">
 
-  <div class="container col-8 col-lg-4 box">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Index</title>
 
-      <div class="tab-content jumbotron form_container"  id="login_jumbo">
-        <div id="header">
-          <h2>Mass Portal</h2>
-        </div>
-        <img src="../../static/images/bearcat2.png" >
-        <h2>Login</h2>
-        <form method="post">
-          {% csrf_token %} <!-- for security -->
-          {{ form|crispy }} 
-          <button type="submit" class="btn btn-primary">Login</button>
-        </form>   
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
+  <link href='https://fonts.googleapis.com/css?family=Encode Sans Expanded' rel='stylesheet'>
+
+  <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" />
+</head>
+
+<body>
+
+  {% block content %}
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="d-flex flex-grow-1">
+      <span class="w-100 d-lg-none d-block">
+        <!-- hidden spacer to center brand on mobile --></span>
+      <a class="navbar-brand d-none d-lg-inline-block" href="#">
+        <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:40px;">KungFuTea
+      </a>
+      <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="#">
+        <img src="//placehold.it/40?text=LOGO" alt="logo">
+      </a>
+      <div class="w-100 text-right">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       </div>
+    </div>
+
+    <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
+      <ul class="navbar-nav ml-auto flex-nowrap">
+
+        <li class="nav-item">
+          <a href="#" class="nav-link m-2 menu-item nav-active">Schedule an appointment <i
+              class="fa fa-calendar-alt"></i></a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link m-2 menu-item">Live Chat <i class="fa fa-phone"></i></a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link m-2 menu-item">Locations</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link m-2 menu-item">Our Team</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link m-2 menu-item">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link m-2 menu-item">Donate</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="input-group col-md-4" id="search">
+      <input class="form-control" id="search" type="search">
+      <span class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button">
+          <i class="fa fa-search"></i>
+        </button>
+      </span>
+    </div>
+
+  </nav>
+
+  <div id="tint">
   </div>
+  <div class="container-fluid" id="background">
+  </div>
+  <div class="container-fluid" id="main_content">
+    {% comment %} <h1 id="slogan">An apple a day keeps the money away</h1> {% endcomment %}
+    <h1 id="slogan">Our doctors can cure <strong id="cancer">cancer</strong>, <br> can yours? </h1>
 
-  <div class="container col-2 col-lg-4"></div>
-</div>
+    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#login">Login</button>
+    <button type="button" class="btn btn-outline-info">Our Doctors</button>
 
-{% endblock %}
+    <!-- The Modal -->
+    <div class="modal fade" id="login">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header center">
+            <h4 class="modal-title center">Log In</h4>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form id="login_form" method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+              {{ form|crispy }}
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer center">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      {% endblock %}
+
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <!-- Popper JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+      <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

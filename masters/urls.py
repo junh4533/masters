@@ -12,6 +12,6 @@ urlpatterns = [
     path('', include('scheduling.urls')), #index page
     path('admin/', admin.site.urls), #admin portal
     path('accounts/', include('django.contrib.auth.urls')), #login and logout   
-    path('users/', include('scheduling.urls')), 
-    path('users/', include('django.contrib.auth.urls')), 
+    # path('users/', include('scheduling.urls')), 
+    # path('users/', include('django.contrib.auth.urls')), 
 ] 
