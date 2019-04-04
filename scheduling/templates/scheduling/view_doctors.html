@@ -27,8 +27,19 @@
     <div class="col-sm-10">
         <br>
         <!-- Main content -->
-       Reports
+        <div id="main_content">
 
+            {% for doctor in doctors %}
+            <div class="card" style="width:400px">
+                <img class="card-img-top" src="{{ doctor.picture.url }}">
+                <div class="card-body center">
+                    <h4 class="card-title">{{ doctor.user }}</h4>
+                    <p class="card-text">{{ doctor.specialty }}</p>
+                </div>
+            </div>
+            <br>
+            {% endfor %}
+        </div>
     </div>
 
 </div>

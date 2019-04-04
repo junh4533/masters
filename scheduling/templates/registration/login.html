@@ -32,7 +32,7 @@
       <span class="w-100 d-lg-none d-block">
         <!-- hidden spacer to center brand on mobile --></span>
       <a class="navbar-brand d-none d-lg-inline-block" href="#">
-        <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:40px;">KungFuTea
+        <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:40px;">KungFuMD
       </a>
       <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="#">
         <img src="//placehold.it/40?text=LOGO" alt="logo">
@@ -48,8 +48,8 @@
       <ul class="navbar-nav ml-auto flex-nowrap">
 
         <li class="nav-item">
-          <a href="#" class="nav-link m-2 menu-item nav-active">Schedule an appointment <i
-              class="fa fa-calendar-alt"></i></a>
+          <a href="#" class="nav-link m-2 menu-item nav-active">Schedule an Appointment
+            <i class="fa fa-calendar-alt"></i></a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link m-2 menu-item">Live Chat <i class="fa fa-phone"></i></a>
@@ -92,13 +92,13 @@
     <button type="button" class="btn btn-outline-info">Our Doctors</button>
 
     <!-- The Modal -->
-    <div class="modal fade" id="login">
+    <div class="modal fade modal-custom" id="login">
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content center">
 
           <!-- Modal Header -->
-          <div class="modal-header center">
-            <h4 class="modal-title center">Log In</h4>
+          <div class="modal-header text-center">
+            <h4 class="modal-title">Log In</h4>
           </div>
 
           <!-- Modal body -->
@@ -109,24 +109,21 @@
             </form>
           </div>
 
-          <!-- Modal footer -->
-          <div class="modal-footer center">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          </div>
         </div>
       </div>
+
     </div>
 
-      {% endblock %}
+    {% endblock %}
 
-      <!-- jQuery library -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <!-- Popper JS -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-      <!-- Latest compiled JavaScript -->
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
-      <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 
 </html>

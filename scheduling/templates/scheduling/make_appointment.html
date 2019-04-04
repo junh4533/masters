@@ -7,9 +7,8 @@
             <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
         </div>
          <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
-                {{ form|crispy }} 
-                <button type="submit" class="btn btn-primary">Signup</button>
-                </p>
+            {{ form|crispy }} 
+            <button type="submit" class="btn btn-primary">Confirm</button>
           </form>
     {% else %}
     <script>window.location.href = "../../accounts/login/"</script>

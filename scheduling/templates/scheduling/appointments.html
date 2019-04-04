@@ -1,16 +1,42 @@
-{% extends 'scheduling/base.html' %} <!-- Links base.html as a HTML template -->
+{% extends 'scheduling/base.html' %}
+<!-- Links base.html as a HTML template -->
 {% load crispy_forms_tags %}
 {% block content %}
-    {% if user.is_authenticated%}    <!--check for login-->
-        <div id="header">
-            <h4>Welcome,</h4>
-            <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
-        </div>
-         <button type="submit" class="btn btn-primary" onclick="window.location='make_appointment';">Make an appointment</button>
-          {% for appointment in data %}
-          <h1>  {{ appointment }}</h1>
-          {% endfor %}
-    {% else %}
-    <script>window.location.href = "../../accounts/login/"</script>
-    {% endif %}
+{% if user.is_authenticated%}
+<!--check for login-->
+<div id="header">
+    <h4>Welcome,</h4>
+    <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
+</div>
+<button type="submit" class="btn btn-primary" onclick="window.location='make_appointment';">Make an appointment</button>
+
+<div class="container-fluid">
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Timeslot</th>
+                <th>Doctor</th>
+                <th>Patient</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in all_appointments %}
+            <tr>
+                <td>{{ appointment.date }}</td>
+                <td>{{ appointment.get_timeslot_display }}</td>
+                <td>{{ appointment.doctor }}</td>
+                <td>{{ appointment.patient }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</div>
+{% else %}
+<script>
+    window.location.href = "../../accounts/login/"
+</script>
+{% endif %}
 {% endblock %}

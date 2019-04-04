@@ -6,13 +6,15 @@ from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from scheduling.models import User, Doctor, Patient, Appointment
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.db.models import F
+from django.views.generic.edit import UpdateView
 
 class SignUp(generic.CreateView):
     form_class = CustomCreationForm
     success_url = reverse_lazy('add_doctor')
     template_name = 'registration/add_user.html'
 
-class AddDoctor(generic.CreateView):
+class AddDoctor(UpdateView):
     form_class = DoctorForm
     success_url = reverse_lazy('index')
     template_name = 'registration/add_doctor.html'
@@ -24,7 +26,7 @@ class AddDoctor(generic.CreateView):
 
 class AppointmentForm(generic.CreateView):
     form_class = AppointmentForm
-    success_url = reverse_lazy('appointments')
+    success_url = reverse_lazy('index')
     template_name = 'scheduling/make_appointment.html'
 
 def user_login(request):
@@ -47,6 +49,19 @@ def user_login(request):
         form = LoginForm()
     return render(request,'registration/login.html',{'form':form})
 
+def doctorupdate(request):
+    if request.method =='POST':
+        form = DoctorForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect('assistant_portal')
+    
+    else:
+        form = UserChangeForm(instance=request.user)
+        args = {'form': form}
+        return render(request,'scheduling/index.html')
+
 def index(request):
     if request.user.is_authenticated:
         if request.user.user_type=="doctor":
@@ -55,56 +70,52 @@ def index(request):
             return redirect('patient_portal')
         else:
             return redirect('assistant_portal')
-    return render(request, 'scheduling/index.html')
 
-def doctor_portal(request):
-    return render(request, 'scheduling/doctor.html')
-
-def patient_portal(request):
-    return render(request, 'scheduling/patient.html')
-
+#################### assistants' views ####################
 def assistant_portal(request):
-    return render(request, 'scheduling/assistant.html')
+    appointments = Appointment.objects.all().order_by('date').order_by('timeslot')[:5]
+    print(appointments)
+    return TemplateResponse(request, 'scheduling/assistant.html', {"appointments" : appointments})
 
-def appointments(request):
-    # data = Appointment.objects.get(patient=request.user)
-    data = Appointment.objects.all()
-    print(data)
-    return TemplateResponse(request, 'scheduling/appointments.html', {"data" : data})
+def all_appointments(request):
+    all_appointments = Appointment.objects.all().order_by('date').order_by('timeslot')
+    print(all_appointments)
+    return TemplateResponse(request, 'scheduling/appointments.html', {"all_appointments" : all_appointments})
 
-def patients(request):
+def all_patients(request):
+    patients = Patient.objects.all()
+    return render(request, 'scheduling/view_patients.html', {"patients" : patients})
+
+def doctors(request):
+    doctors = Doctor.objects.all()
+    print(doctors)
+    return TemplateResponse(request, 'scheduling/view_doctors.html', {"doctors" : doctors})
+
+#################### doctors' views ####################
+def doctor_portal(request):
+    appointments = Appointment.objects.get(doctor=request.user.doctor.upin).order_by('date').order_by('timeslot')[:5]
+    print(request.user.doctor.upin)
+    print(appointments)
+    return TemplateResponse(request, 'scheduling/doctor.html', {"appointments" : appointments})
+
+def doctor_appointments(request):
+    appointments = Appointment.objects.get(doctor=request.user.doctor.upin).order_by('date').order_by('timeslot')
+    return TemplateResponse(request, 'scheduling/appointments.html', {"appointments" : appointments})
+
+def doctor_patients(request):
+    patients = Patient.objects.get(doctor = request.user.doctor)
     return render(request, 'scheduling/view_patients.html')
 
+#################### patients' views ####################
+def patient_portal(request):
+    appointments = Appointment.objects.get(patient=request.user)
+    return TemplateResponse(request, 'scheduling/patient.html', {"appointments" : appointments})
+
+#################### etc ####################
 def reports(request):
     return render(request, 'scheduling/reports.html')
 
 def settings(request):
     return render(request, 'scheduling/settings.html')
-
-# def AddDoctor(request):
-#     if request.method == 'POST':
-#         form = UserChangeForm(request.POST, instance=request.user)
-
-#         if form.is_valid():
-#             form.save()
-#             return redirect('scheduling/index.html')
-#     else:   
-#         form = UserChangeForm(request.POST, instance=request.user)
-#         args = {'form':form}
-#         return render(request, 'scheduling/index.html', args)
-
-
-# #for users to edit personal information
-# def EditInfo(request):
-#     if request.method == 'POST':
-#         form = UserChangeForm(request.POST, instance=request.user)
-
-#         if form.is_valid():
-#             form.save()
-#             return redirect('scheduling/index.html')
-#     else:   
-#         form = ChangeInfoForm(request.POST, instance=request.user)
-#         args = {'form':form}
-#         return render(request, 'scheduling/index.html', args)
 
 

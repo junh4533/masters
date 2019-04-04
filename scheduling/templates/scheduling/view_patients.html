@@ -1,13 +1,50 @@
-{% extends 'scheduling/base.html' %} <!-- Links layout.html as a HTML template -->
+{% extends 'scheduling/portal_template.html' %}
+<!-- Links base.html as a HTML template -->
+{% load static %}
 {% load crispy_forms_tags %}
+
 {% block content %}
-    {% if user.is_authenticated%}    <!--check for login-->
-        <div id="header">
-            <h4>Welcome, Dr.</h4>
-            <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
+{% if user.is_authenticated and user.user_type != "patient" or user.user_type != "doctor" %}
+<!--check for login-->
+<!-- Topbar -->
+<div id="topbar">
+    <h4>Welcome, Doctor</h4>
+    <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
+</div>
+
+<div class="row">
+    <div class="col-sm-2">
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <a href="appointments/">Appointments</a>
+            <a href="patients/">Doctors</a>
+            <a href="patients/">Patients</a>
+            <a href="reports/">Reports</a>
+            <a href="settings/">Setting</a>
         </div>
 
-    {% else %}
-    <script>window.location.href = "../accounts/login/"</script>
-    {% endif %}
+    </div>
+    <div class="col-sm-10">
+        <br>
+        <!-- Main content -->
+        <div id="main_content">
+
+            {% for patient in patients %}
+                <div class="card" style="width:400px">
+                    <img class="card-img-top" src="{{ patient.picture.url }}">
+                    <div class="card-body center">
+                        <h4 class="card-title">{{ patient.user }}</h4>
+                        <p class="card-text">PID: {{ patient.pid }}</p>
+                    </div>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+{% else %}
+{% url index %}
+{% endif %}
 {% endblock %}

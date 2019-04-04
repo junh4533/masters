@@ -14,4 +14,4 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')), #login and logout   
     # path('users/', include('scheduling.urls')), 
     # path('users/', include('django.contrib.auth.urls')), 
-] 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
