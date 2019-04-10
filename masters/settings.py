@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'scheduling',
     'crispy_forms',
+    # 'swingtime',
 ]
 
 AUTH_USER_MODEL = 'scheduling.User'
@@ -132,6 +133,8 @@ LOGOUT_REDIRECT_URL = 'login'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# SWINGTIME_SETTINGS_MODULE = 'scheduling.swingtime_settings'
 
 
 

@@ -2,7 +2,8 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Appointment, User, Doctor, Patient
+from .models import *
+# from .models import Appointment, User, Doctor, Patient
 
 #form to create a new patient
 class CustomCreationForm(UserCreationForm):
@@ -23,10 +24,20 @@ class LoginForm(forms.Form):
 class DoctorForm(ModelForm):
     class Meta:
         model = Doctor
-        # fields = ('specialty','start_time','end_time','days_available','appointments_per_hour',)
         fields = ('user','specialty','appointments_per_hour','picture')
 
 class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = ('doctor','patient','timeslot',)
+
+class EditDoctorForm(UserChangeForm):
+    class Meta:
+        model = Doctor
+        fields = {
+            'specialty',
+            'appointments_per_hour'
+        }
+
+class searchAppointment(forms.Form):
+     date = models.DateField(default=date.today)

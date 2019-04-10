@@ -1,57 +1,167 @@
-{% extends 'scheduling/base.html' %} <!-- Links base.html as a HTML template -->
 {% load static %}
-{% comment %} {% load scheduling_tags %} {% endcomment %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css"/>
 {% load crispy_forms_tags %}
 
 {% block content %}
-    {% if user.is_authenticated and user.user_type == "patient" %} <!--check for login-->
-        <!-- Header -->
-        <div id="header">
-            <h4>Welcome, Patient</h4>
-            <a href="{% url 'logout' %}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
+{% if user.is_authenticated and user.user_type == "patient" %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Index</title>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
+  <link href='https://fonts.googleapis.com/css?family=Encode Sans Expanded' rel='stylesheet'>
+
+  <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="d-flex flex-grow-1">
+      <span class="w-100 d-lg-none d-block">
+        <!-- hidden spacer to center brand on mobile --></span>
+      <a class="navbar-brand d-none d-lg-inline-block" href="#">
+        <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:40px;">KungFuMD
+      </a>
+      <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="#">
+        <img src="//placehold.it/40?text=LOGO" alt="logo">
+      </a>
+      <div class="w-100 text-right">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
+      <ul class="navbar-nav ml-auto flex-nowrap">
+
+        <li class="nav-item">
+          <a href="#" class="nav-link m-2 menu-item nav-active">
+            Schedule an appointment
+            <span class="icon">
+              <i class="fas fa-calendar-alt"></i>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link m-2 menu-item">
+            Health Report
+            <span class="icon">
+              <i class="fas fa-heartbeat"></i>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link m-2 menu-item">
+            Profile
+            <span class="icon">
+              <i class="fas fa-user"></i>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{%url 'logout'%}" class="nav-link m-2 menu-item">
+            Logout 
+            <span> 
+            <i class="fas fa-sign-out-alt"></i> 
+            </span> 
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="input-group col-md-4" id="search">
+      <input class="form-control" id="search" type="search">
+      <span class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button">
+          <i class="fa fa-search"></i>
+        </button>
+      </span>
+    </div>   
+
+  </nav>
+
+  <div class="row" id="">
+    <div class="col-6" id="appointments">
+      <h1>Upcoming Appointments</h1>
+
+      <div class="container-fluid">
+        <table class="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Timeslot</th>
+              <th>Doctor</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for appointment in appointments %}
+            <tr>
+              <td>{{ appointment.date }}</td>
+              <td>{{ appointment.get_timeslot_display }}</td>
+              <td>{{ appointment.doctor }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <div class="col-6" id="appointments">
+      <h1>Schedule an appointment</h1>
+      <form  method="get" action="../home/">
+            <label for="date">Date: </label>
+          <input id="date" type="date" name="date" value="{{ date }}">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+      <form method= "post" action="">
+      {% csrf_token %}
+        <div class="form-group">
+          <label for="">Choose a timeslot:</label>
+          <select class="form-control" id="">
+            {% for available_appointment in available_appointments %}
+              {% comment %} <option>{{ available_appointment.get_timeslot_display }}</option> {% endcomment %}
+              <option>{{ available_appointment }} </option>
+            {% endfor %}
+          </select>
         </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
 
-        <!-- Sidebar -->
-        <div id="sidebar">
-            <a href="../appointments/">Appointments</a>
-            <a href="../patients/">Patients</a>
-            <a href="../reports/">Reports</a>
-            <a href="../settings/">Setting</a>
-        </div>
+    </div>
 
-        <!-- Main content -->
-        
-        <div class="row" id="icon_row">
-            
-            <div class="col-6" id="appointments">
-                <h1>Upcoming Appointments</h1>
+  </div>
 
-                <div class="container-fluid">
-                    <table class="table table-dark table-striped">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Timeslot</th>
-                                <th>Doctor</th>
-                                <th>Patient</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{{ appointment.date }}</td>
-                                <td>{{ appointments.get_timeslot_display }}</td>
-                                <td>{{ appointments.doctor }}</td>
-                                <td>{{ appointments.patient }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
 
-            </div>
-    
-        </div>
-    {% else %}
-        <script>window.location.href = "../../accounts/login/"</script>
-    {% endif %}
-{% endblock %}
+  {% else %}
+  {% url index %}
+  {% endif %}
+  {% endblock %}
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

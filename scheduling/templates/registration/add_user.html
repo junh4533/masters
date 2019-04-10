@@ -11,7 +11,7 @@
           <h2>Register a doctor/patient</h2>
           <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
                 {{ form|crispy }} 
-                <button type="submit" class="btn btn-primary"  onclick="window.location='/add_doctor/';">Register</button>
+                <button type="submit" class="btn btn-primary">Register</button>
           </form>
     </div>
   </div>

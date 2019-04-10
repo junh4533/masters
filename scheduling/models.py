@@ -1,11 +1,10 @@
 #contains all the models and database structure
 from django.db import models
-from datetime import *
 from django.contrib.auth.models import Group, User, Permission
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser, UserManager
-from datetime import date, datetime
+from datetime import datetime, time, date
 
 class User(AbstractUser):
     users = (
@@ -78,8 +77,11 @@ class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE, related_name='appointment_patient')
     # patient =  models.OneToOneField(Patient, on_delete=models.CASCADE)
 
+    # class Meta:
+    #     unique_together = ["date", "timeslot", "doctor"]
+
     def __str__(self):
-        return str(self.doctor) + " " + str(self.patient) + " - " + str(self.get_timeslot_display()) 
+        return str(self.doctor) + " " + str(self.patient) + " - " + str(self.get_timeslot_display()) +" "+str(self.date)
 
 
 
