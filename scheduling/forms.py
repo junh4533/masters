@@ -11,11 +11,11 @@ class CustomCreationForm(UserCreationForm):
         model = User
         fields = ('first_name','last_name','username','email','user_type',)
         
-#allows the user to change their information
-class CustomChangeForm(UserChangeForm):
-    class Meta:
-        model = User
-        fields = ('username','email')
+# # #allows the user to change their information
+# class CustomChangeForm(UserChangeForm):
+#     class Meta:
+#         model = User
+#         fields = ('username','email')
 
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -24,19 +24,29 @@ class LoginForm(forms.Form):
 class DoctorForm(ModelForm):
     class Meta:
         model = Doctor
-        fields = ('user','specialty','appointments_per_hour','picture')
+        fields = ('user','specialty','picture')
 
 class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
-        fields = ('doctor','patient','timeslot',)
+        fields = ('doctor','patient','date','timeslot') 
 
-class EditDoctorForm(UserChangeForm):
+class AddSpecialtyForm(UserChangeForm):
     class Meta:
         model = Doctor
         fields = {
             'specialty',
-            'appointments_per_hour'
+            # 'picture'
+        }
+
+class EditProfile(UserChangeForm):
+    class Meta:
+        model = User
+        fields = {
+            'username',
+            'first_name',
+            'last_name',
+            "email",
         }
 
 class searchAppointment(forms.Form):

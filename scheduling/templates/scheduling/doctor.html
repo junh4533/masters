@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-{% if user.is_authenticated and user.user_type != "patient" or user.user_type != "doctor" %}
+{% if user.is_authenticated and user.user_type == "doctor" %}
 <!--check for login-->
 <!-- Topbar -->
 <div id="topbar">
@@ -91,16 +91,6 @@
                     </span>
                 </a>
                 <div class="icon_description">Reports</div>
-            </div>
-
-            <!-- Settings -->
-            <div class="col-3 icon_box" id="icon4">
-                <a href="../settings">
-                    <span class="icon">
-                        <i class="fas fa-cogs"></i>
-                    </span>
-                </a>
-                <div class="icon_description">Setting</div>
             </div>
 
             <!-- Settings -->

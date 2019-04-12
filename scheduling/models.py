@@ -24,7 +24,7 @@ class Doctor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user.user_type = "doctor"
     specialty = models.CharField(max_length=20)
-    appointments_per_hour = models.IntegerField(null=True)
+    # appointments_per_hour = models.IntegerField(null=True)
     picture = models.ImageField(upload_to = 'doctors', default = '')
 
     #return the doctors' name

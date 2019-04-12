@@ -2,15 +2,7 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from scheduling.models import User, Doctor, Patient, Appointment
-from .forms import DoctorForm, LoginForm, CustomCreationForm, CustomChangeForm
-
-UserAdmin.fieldsets += ('Custom fields set', {'fields': ('user_type',)}),
-
-# # Register the models so that they appear as tables in Django admin
-class CustomUserAdmin(UserAdmin):
-    model = User
-    add_form = CustomCreationForm
-    form = CustomChangeForm
+from .forms import DoctorForm, LoginForm, CustomCreationForm
 
 #show all fields in the doctor table
 class CustomDoctorAdmin(admin.ModelAdmin):

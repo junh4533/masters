@@ -4,11 +4,11 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-{% if user.is_authenticated and user.user_type != "patient" or user.user_type != "doctor" %}
+{% if user.is_authenticated and user.user_type == "assistant" or user.user_type != "doctor" %}
 <!--check for login-->
 <!-- Topbar -->
 <div id="topbar">
-    <h4>Welcome, Doctor</h4>
+    <h4>Welcome {{ user }}</h4>
     <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
 </div>
 

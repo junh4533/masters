@@ -5,33 +5,29 @@ from . import views
 
 #load methods from views.py
 urlpatterns = [
-    path('', views.index, name='index'), 
+    path('', views.index, name='index'),
     path('doctor/', include(([
         path('home/', views.doctor_portal,name='doctor_portal'),
-        path('appointments/', views.doctor_appointments, name='doctor_appointments'),
-        path('patients/', views.doctor_patients, name='doctor_patients'),
-        path('reports/', views.reports, name='doctor_reports'),
+        path('appointments/', views.all_appointments, name='all_appointments'),
+        path('patients/', views.patients, name='patients'),
+        path('reports/', views.reports, name='reports'),
         path('settings/', views.settings, name='doctor_settings'),
-        path('profile/', views.doctor_profile, name='doctor_profile'),
-        path('profile/edit/', views.add_info, name='add_info'),
+        path('profile/', views.edit_profile, name='edit_profile'),
+        path('profile/add/', views.add_info, name='add_info'),
     ]))),
     path('patient/', include(([
         path('home/',views.patient_portal, name='patient_portal'),
-        path('make_appointment', views.AppointmentForm.as_view(), name='make_appointments'),
-        # path('edit/', views.EditInfo.as_view(), name='edit'),
+        path('profile/', views.edit_profile, name='edit_profile'),
     ]))),
     path('assistant/', include(([
         path('home/', views.assistant_portal,name='assistant_portal'),
         path('appointments/', views.all_appointments, name='all_appointments'),
-        path('appointments/make_appointment', views.AppointmentForm.as_view(), name='make_appointments'),
-        path('patients/', views.all_patients, name='all_patients'),
+        path('appointments/make_appointment', views.make_appointment, name='make_appointments'),
+        path('patients/', views.patients, name='patients'),
         path('doctors/', views.doctors, name='all_doctors'),
-        path('reports/', views.reports, name='assistant_reports'),
-        path('settings/', views.settings, name='assistant_settings'),
+        path('reports/', views.reports, name='reports'),
         path('add_user/', views.SignUp.as_view(), name='add_user'), 
-        # path('change/',views.doctorupdate, name='drupdate'),
-        # path('add_user/', views.SignUp.as_view(), name='add_user'), 
-        # path('add_user/add_doctor/', views.AddDoctor.as_view(), name='add_doctor'), 
-        # path('edit/', views.EditInfo.as_view(), name='edit'),
+        path('profile/', views.edit_profile, name='edit_profile'),
     ]))),
 ]
+

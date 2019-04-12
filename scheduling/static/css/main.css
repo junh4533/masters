@@ -3,35 +3,10 @@ body {
     background-color: #e6e6fa;
 }
 
-/* #header {
-    background-color: #007bff;
-    height: 10%;
-} */
-
-/* .box {
-    position: relative;
-    margin-top: 10vh;
-    color: #E5E4E2;
-} */
-
-/* .tab-content.jumbotron {
-    border-radius: 0 0 .3rem .3rem;
-}
-
-.center_button {
-    text-align: center;
-    display: block;
-} */
-
-
 /* bootstrap */
 
 .col-3 {
     padding: 0 0 0 0;
-}
-
-.jumbotron {
-    background-color: #133337;
 }
 
 .row {
