@@ -8,27 +8,42 @@
 <!--check for login-->
 <!-- Topbar -->
 <div id="topbar">
-    <h4>Welcome, Doctor</h4>
+    <h4>Welcome, Assistant</h4>
     <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
 </div>
 
-<div class="row">
-    <div class="col-sm-2">
-        <!-- Sidebar -->
-        <div id="sidebar">
-            <a href="appointments/">Appointments</a>
-            <a href="patients/">Doctors</a>
-            <a href="patients/">Patients</a>
-            <a href="reports/">Reports</a>
-            <a href="settings/">Setting</a>
+<div class="row" id="">
+    <form method="get" action="">
+        <div class="form-group">
+            {{filter.form|crispy}}
         </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
 
-    </div>
-    <div class="col-sm-10">
-        <br>
-        <!-- Main content -->
-       Reports
-
+    <div class="col-6" id="appointments">
+        <h1>Appointment Report</h1>
+        <div class="container-fluid">
+            <table class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                    <th>Date</th>
+                    <th>Timeslot</th>
+                    <th>Doctor</th> 
+                    <th>Patient</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in filter.qs %}
+                    <tr>
+                    <td>{{ appointment.date }}</td>
+                    <td>{{ appointment.get_timeslot_display }}</td>
+                    <td>{{ appointment.doctor }}</td>
+                    <td>{{ appointment.patient }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>

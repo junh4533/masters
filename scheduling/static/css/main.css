@@ -1,5 +1,6 @@
 body {
-    /* background-color: #EADEDB; */
+    width: 100%;
+    height: 100%;
     background-color: #e6e6fa;
 }
 
@@ -21,7 +22,7 @@ body {
 
 /* icon css */
 
-.icon {
+.row-icon {
     font-size: 125px;
     color: white;
     text-align: center;
@@ -78,4 +79,8 @@ body {
 /* welcome message */
 #header>h4 {
     padding-left: 10px;
+}
+
+.form_container{
+    padding: 1vw 1vw 1vw 1vw;
 }

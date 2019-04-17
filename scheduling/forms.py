@@ -36,7 +36,6 @@ class AddSpecialtyForm(UserChangeForm):
         model = Doctor
         fields = {
             'specialty',
-            # 'picture'
         }
 
 class EditProfile(UserChangeForm):

@@ -57,8 +57,33 @@
 
             </div>
 
-            <div class="col-6" id="pie_chart">
-                <img src="{% static 'images/pie.png' %}">
+            <div class="col-6" id="chart">
+                <div id="container"></div>
+                <script src="https://code.highcharts.com/highcharts.src.js"></script>
+                <script>
+                    Highcharts.chart('container', {
+                        chart:{
+                            type:'column'
+                        },
+                        title:{
+                            text:'Test Appointment Chart'
+                        },
+                    
+                        xAxis:{
+                            categories:{{categories|safe}},
+                            color: 'green'
+                        },
+                        yAxis:{
+                            title:{
+                                text:'Number of appointment'
+                            }
+                        },
+                        series: [{ 
+                            name:'Appointments',
+                            data:{{appointment_count}}
+                        }],
+                    });
+                </script>
             </div>
         </div>
         <br>
@@ -67,7 +92,7 @@
             <!-- Appointments -->
             <div class="col-2 icon_box" id="icon1">
                 <a href="../appointments">
-                    <span class="icon">
+                    <span class="icon row-icon">
                         <i class="fas fa-calendar-alt"></i>
                     </span>
                 </a>
@@ -77,7 +102,7 @@
              <!-- Patients -->
             <div class="col-2 icon_box" id="icon2">
                 <a href="../patients">
-                    <span class="icon">
+                    <span class="icon row-icon">
                         <i class="fas fa-users"></i>
                     </span>
                 </a>
@@ -87,7 +112,7 @@
             <!-- Doctors -->
             <div class="col-2 icon_box" id="icon5">
                 <a href="../doctors">
-                    <span class="icon">
+                    <span class="icon row-icon">
                         <i class="fas fa-user-md"></i>
                     </span>
                 </a>
@@ -97,7 +122,7 @@
              <!-- Reports -->
             <div class="col-2 icon_box" id="icon3">
                 <a href="../reports">
-                    <span class="icon">
+                    <span class="icon row-icon">
                         <i class="fas fa-file"></i>
                     </span>
                 </a>
@@ -107,7 +132,7 @@
             <!-- Settings -->
             <div class="col-2 icon_box" id="icon4">
                 <a href="../settings">
-                    <span class="icon">
+                    <span class="icon row-icon">
                         <i class="fas fa-cogs"></i>
                     </span>
                 </a>

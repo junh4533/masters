@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'scheduling',
     'crispy_forms',
+    'django_filters',
     # 'swingtime',
 ]
 

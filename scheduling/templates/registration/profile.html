@@ -1,23 +1,92 @@
 {% extends 'scheduling/base.html' %}
-<!-- Links layout.html as a HTML template -->
+{% load staticfiles %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
+      {% if user.is_authenticated %}
+            {% if user.user_type == "patient" %}
+                  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="d-flex flex-grow-1">
+                              <span class="w-100 d-lg-none d-block">
+                                    <!-- hidden spacer to center brand on mobile --></span>
+                              <a class="navbar-brand d-none d-lg-inline-block" href="{%url 'patient_portal'%}">
+                                    <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:40px;">KungFuMD
+                              </a>
+                              <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="{%url 'patient_portal'%}">
+                                    <img src="//placehold.it/40?text=LOGO" alt="logo">
+                              </a>
+                              <div class="w-100 text-right">
+                                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
+                                          <span class="navbar-toggler-icon"></span>
+                                    </button>
+                              </div>
+                        </div>
 
-      <div class="row">
-            <div class="container col-2 col-lg-3"></div>
+                        <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
+                              <ul class="navbar-nav ml-auto flex-nowrap">
+                                    <li class="nav-item">
+                                          <a href="#" class="nav-link m-2 menu-item nav-active">
+                                                Health Report
+                                                <span class="icon">
+                                                      <i class="fas fa-heartbeat"></i>
+                                                </span>
+                                          </a>
+                                    </li>
+                                    <li class="nav-item">
+                                          <a href="/patient/profile" class="nav-link m-2 menu-item">
+                                                Profile
+                                                <span class="icon">
+                                                      <i class="fas fa-user"></i>
+                                                </span>
+                                          </a>
+                                    </li>
+                                    <li class="nav-item">
+                                          <a href="{%url 'logout'%}" class="nav-link m-2 menu-item">
+                                                Logout
+                                                <span>
+                                                      <i class="fas fa-sign-out-alt"></i>
+                                                </span>
+                                          </a>
+                                    </li>
+                              </ul>
+                        </div>
 
-            <div class="container col-8 col-lg-6 box">
+                        <div class="input-group col-md-4" id="search">
+                              <input class="form-control" id="search" type="search">
+                              <span class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button">
+                                          <i class="fa fa-search"></i>
+                                    </button>
+                              </span>
+                        </div>
 
-                  <div class="jumbotron form_container">
-                        <h2>{{heading}}</h2>
-                        <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
-                              {{ form|crispy }}
-                              <button type="submit" class="btn btn-primary">Edit</button>
-                        </form>
+                  </nav>
+
+            {% endif %}
+
+            <div class="row container-fluid">
+                  <div class="container col-2 col-lg-3"></div>
+
+                  <div class="container col-8 col-lg-6 box">
+
+                        <div class="jumbotron form_container">
+                              <h2>{{heading}}</h2>
+                              <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+                                    {{ form|crispy }}
+                                    <button type="submit" class="btn btn-primary">Edit</button>
+                              </form>
+                              {% if success  %}
+                              <div class="alert alert-success">
+                                    <strong>{{success}}</strong>
+                              </div>
+                              {% endif %}
+                        </div>
                   </div>
+
+                  <div class="container col-2 col-lg-3"></div>
             </div>
 
-            <div class="container col-2 col-lg-3"></div>
-      <div>
-
+      {% else %}
+            {% url index %}
+      {% endif %}
 {% endblock %}
