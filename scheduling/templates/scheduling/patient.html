@@ -19,18 +19,17 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
   <link href='https://fonts.googleapis.com/css?family=Encode Sans Expanded' rel='stylesheet'>
-
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
   <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" />
 
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!-- Popper JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-  <!-- Latest compiled JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js">
+  </script>
   <script src="{% static 'js/main.js' %}"></script>
-  <script src="../../static/js/main.js"></script>
 
 </head>
 
@@ -98,34 +97,33 @@
   <div class="row container-fluid">
 
     <div class="col-6" id="upcoming">
-      <h1>Upcoming Appointments</h1>
-      <table class="table table-dark table-striped">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Timeslot</th>
-            <th>Doctor</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for appointment in appointments %}
-          <tr>
-            <td>{{ appointment.date }}</td>
-            <td>{{ appointment.get_timeslot_display }}</td>
-            <td>{{ appointment.doctor }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <h2>Upcoming Appointments</h2>
+      <hr>
+      {% for appointment in appointments %}
+      <div class="media p-3">
+        <img src="{{ doctor_pic.picture.url }}" class="align-self-start mr-3" style="width:80px; height:80px;">
+        <div class="vl"></div>
+        &nbsp;
+        <div class="media-body">
+          <h4>Dr. {{ appointment.doctor }} <small><i>{{ appointment.date }}</i></small></h4>
+          <h5>{{ appointment.get_timeslot_display }}</h5>
+        </div>
+      </div>
+      <br>
+      {% endfor %}
     </div>
 
     <div class="col-6" id="appointments">
-      <h1>Schedule an appointment</h1>
-      <form method="get" name="select_date">
-        <label for="date">Date: </label>
-        <input id="date" type="date" name="date">
+      <h2>Schedule an appointment</h2>
+
+      <form method="get" name="select_date" style="overflow:hidden;">
+        Date:
+        <div id="datetimepicker12">
+          <input type="hidden" name="date">
+        </div>
         <button type="submit" class="btn btn-primary" id="show">Search</button>
       </form>
+
       <h3>Available timeslots:</h3>
       <form method="post" action="../home/" enctype="multipart/form-data">
         {% csrf_token %}
@@ -156,5 +154,7 @@
 
 
 </body>
+
+
 
 </html>

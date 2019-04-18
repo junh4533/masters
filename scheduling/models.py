@@ -84,4 +84,3 @@ class Appointment(models.Model):
         return str(self.doctor) + " " + str(self.patient) + " - " + str(self.get_timeslot_display()) +" "+str(self.date)
 
 
-

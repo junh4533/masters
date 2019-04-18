@@ -185,12 +185,16 @@ def add_info(request):
 #################### patients' views ####################
 def patient_portal(request):
     data_input = request.GET.get('date')
+    # datetimeobject = datetime.strptime(data_input,'%m/%d/%Y')
+    # newformat = datetimeobject.strftime('%Y-%m-%d')
+    # print(newformat)
     print(data_input)
     #imported datetime to show only upcoming appointment
     appointments = Appointment.objects.filter(patient=request.user.patient.pid).filter(date__gte=datetime.now()-timedelta(days=1)).order_by('date','timeslot')
     selected_date = Appointment.objects.filter(date = data_input).values_list('timeslot', flat=True)
     available_appointments = [(value, time) for value, time in Appointment.TIMESLOT_LIST if value not in selected_date]
     doctor =  Patient.objects.get(doctor=request.user.patient.doctor).doctor
+    doctor_pic = Doctor.objects.get(upin=request.user.patient.doctor.upin)
 
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
@@ -199,5 +203,12 @@ def patient_portal(request):
             return redirect('../home/')
     else:
         form = AppointmentForm(request.POST)
-        args = {"form" : form, "appointments" : appointments, "available_appointments" : available_appointments, "data_input": data_input, "doctor": doctor}
+        args = {
+            "form" : form, 
+            "appointments" : appointments, 
+            "available_appointments" : available_appointments, 
+            "data_input": data_input, 
+            "doctor": doctor, 
+            "doctor_pic":doctor_pic
+        }
         return render(request, 'scheduling/patient.html', args)

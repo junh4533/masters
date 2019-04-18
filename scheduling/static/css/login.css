@@ -59,3 +59,8 @@ nav {
     font-family: 'Encode Sans Expanded';
     font-size:75px;
 }
+
+.vl {
+    border-left: 4px solid #39CCCC;
+    height: 70px;
+  }
