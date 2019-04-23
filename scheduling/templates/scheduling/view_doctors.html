@@ -6,20 +6,27 @@
 {% block content %}
 {% if user.is_authenticated and user.user_type != "patient" or user.user_type != "doctor" %}
 
-<div id="topbar">
-      <h4>Welcome back, {{user}}</h4>
-</div>
-
 <div class="row container-fluid">
-    <div class="col-sm-2 sidebar">
-        <!-- Sidebar -->
-        <div id="sidebar">
-            <a href="{% url 'assistant_portal' %}"><i class="fa fa-home"></i> Home</a>
-            <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule an Appointment</a>
-            <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add a User</a>
-            <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
-            <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
+   <div class="col-2 sidebar">
+        <br>
+        <div id="profile">
+            <i class="fas fa-user-shield" style="font-size:60px;"></i>
+            <br><br>
+            <h5>{{user}} </h5>
+            <h6>{{user.user_type}} </h6>
         </div>
+
+        <a href="{% url 'assistant_portal' %}"><i class="fa fa-home"></i> Home</a>
+        <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule an Appointment</a>
+        <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add a User</a>
+        <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
+        <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
+
+        <div id="footer">
+            <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:30px;">
+            <h6>KungFuMD</h6>
+        </div>
+
     </div>
 
     <div class="col-sm-10">

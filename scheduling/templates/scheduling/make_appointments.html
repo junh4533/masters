@@ -12,26 +12,32 @@
     </form>
 </div>
 {% elif user.is_authenticated %}
-<!-- Topbar -->
-<div id="topbar">
-    <h4>Welcome {{user}}</h4>
-</div>
 
-<div class="row">
+<div class="row container-fluid">
     <div class="col-2 sidebar">
-        <!-- Sidebar -->
-        <div id="sidebar">
-            <a href="{% url 'assistant_portal' %}"><i class="fa fa-home"></i> Home</a>
-            <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule an Appointment</a>
-            <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add a User</a>
-            <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
-            <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
+        <br>
+        <div id="profile">
+            <i class="fas fa-user-shield" style="font-size:60px;"></i>
+            <br><br>
+            <h5>{{user}} </h5>
+            <h6>{{user.user_type}} </h6>
+        </div>
+
+        <a href="{% url 'assistant_portal' %}"><i class="fa fa-home"></i> Home</a>
+        <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule an Appointment</a>
+        <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add a User</a>
+        <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
+        <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
+
+        <div id="footer">
+            <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:30px;">
+            <h6>KungFuMD</h6>
         </div>
 
     </div>
 
     <div class="col-5">
-         <br>
+        <br>
         <form id="datepicker" method="get" name="select_date" style="overflow:hidden;">
             <div id="datetimepicker12">
                 <input type="hidden" name="date" id="date">
@@ -43,21 +49,21 @@
         <br><br><br>
         <form method="post" enctype="multipart/form-data" id="appointment_form">
             {% csrf_token %}
-                    Doctor
-                    {{ form.doctor|add_class:'form-control'}}
-                    <br>
-                    Patient 
-                    {{ form.patient|add_class:'form-control' }}
-                    <br>
-                <input type="hidden" name="date" value="{{data_input}}">
-                Available Appointments for {{ data_input }}
-                <select class="form-control" id="" name="timeslot">
-                    {% for available_appointment in available_appointments %}
-                    <option value="{{ available_appointment.0 }}">{{ available_appointment.1 }}</option>
-                    {% endfor %}
-                </select>
+            Doctor
+            {{ form.doctor|add_class:'form-control'}}
+            <br>
+            Patient
+            {{ form.patient|add_class:'form-control' }}
+            <br>
+            <input type="hidden" name="date" value="{{data_input}}">
+            Available Appointments for {{ data_input }}
+            <select class="form-control" id="" name="timeslot">
+                {% for available_appointment in available_appointments %}
+                <option value="{{ available_appointment.0 }}">{{ available_appointment.1 }}</option>
+                {% endfor %}
+            </select>
 
-                <br>
+            <br>
             <button type="submit" class="btn btn-info">Submit</button>
         </form>
 

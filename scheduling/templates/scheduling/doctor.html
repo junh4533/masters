@@ -6,20 +6,27 @@
 {% block content %}
 {% if user.is_authenticated and user.user_type == "doctor"  %}
 
-<!-- Topbar -->
-<div id="topbar">
-  <h4>Welcome back, Dr. {{user}}</h4>
-</div>
-
 <div class="row container-fluid">
 
   <div class="col-2 sidebar">
-    <!-- Sidebar -->
-    <div id="sidebar">
-      <a href="{% url 'doctor_portal' %}"><i class="fa fa-home"></i> Home</a>
-      <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
-      <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
+  <br>
+    <div id="profile">
+      <img id="pfp" class="rounded-circle" src="{{user.doctor.picture.url}}">
+      <br><br>
+      <h5> Dr. {{user}} </h5>
+      <h6>{{user.doctor.specialty}} </h6>
     </div>
+
+    <h6>Appointments scheduled for today: </h6>
+    <a href="{% url 'doctor_portal' %}"><i class="fa fa-home"></i> Home</a>
+    <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
+    <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
+    
+    <div id="footer"> 
+       <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:30px;">
+       <h6>KungFuMD</h6>
+    </div>
+   
   </div>
 
   <div class="col-10">
@@ -33,7 +40,8 @@
         <h3>Upcoming Appointments</h3>
         {% for appointment in appointments %}
         <div class="media p-3">
-          <img src="{{ appointment.patient.picture.url }}" class="align-self-start mr-3" style="width:80px; height:80px;">
+          <img src="{{ appointment.patient.picture.url }}" class="align-self-start mr-3"
+            style="width:80px; height:80px;">
           <div class="vl"></div>
           &nbsp;
           <div class="media-body">

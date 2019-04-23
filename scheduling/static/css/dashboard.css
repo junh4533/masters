@@ -89,7 +89,7 @@ a:hover {
 
 /*************** topbar css ******************/
 
-#topbar {
+/* #topbar {
     width: 100vw;
     height: 5vh;
     background-color: #0E2F44;
@@ -98,17 +98,16 @@ a:hover {
 
 #topbar h4 {
     left: 15px;
-}
+} */
 
 /*************** sidebar css ******************/
 
 .sidebar {
-    height: 95vh;
+    height: 100vh;
     z-index: 1;
     bottom: 0;
-
     left: 0;
-    background-color: #111;
+    background-color: rgb(9, 32, 46);
     padding: 0 0 0 0;
 }
 
@@ -123,6 +122,27 @@ a:hover {
 .sidebar a:hover {
     color: black;
     background-color: white;
+}
+#pfp{
+    width:125px;
+    height:125px;
+}
+
+#profile{
+    text-align:center;
+    color:white;
+}
+
+#footer{
+    position: absolute;
+    width:100%;
+    bottom:0;
+    color:white;
+    text-align: center;
+}
+
+#footer > *{
+    display:inline;
 }
 
 /*************** jumbotron form css ******************/

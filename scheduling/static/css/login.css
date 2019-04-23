@@ -4,6 +4,18 @@ body {
     background-color: #e6e6fa;
 }
 
+.center {
+    text-align: center;
+}
+
+.btn-dark a {
+    color: white;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
 #background {
     height: 92vh;
     background-image: url("../images/doctor3.jpg");
@@ -26,6 +38,11 @@ body {
     background: rgba(0, 0, 0, 0.6);
 }
 
+.vl {
+    border-left: 4px solid #39CCCC;
+    height: 70px;
+}
+
 #main_content {
     z-index: 99999;
     height: 50%;
@@ -35,20 +52,12 @@ body {
     left: 5%;
 }
 
-#search {
-    width: 10vw;
-}
-
-.center {
-    text-align: center;
-}
-
 nav {
     height: 8vh;
 }
 
-#slogan {
-    color: #7FDBFF;
+#search {
+    width: 10vw;
 }
 
 #cancer {
@@ -58,20 +67,10 @@ nav {
 #slogan {
     font-family: 'Encode Sans Expanded';
     font-size: 75px;
+    color: #7FDBFF;
 }
 
-.vl {
-    border-left: 4px solid #39CCCC;
-    height: 70px;
-}
-
-.btn-dark a {
-    color: white;
-}
-
-a:hover {
-    text-decoration: none;
-}
+/*************** jumbotron forms css ******************/
 
 .form_container>* {
     display: inline;

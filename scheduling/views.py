@@ -69,12 +69,12 @@ def all_appointments(request):
 def patients(request):
     if request.user.user_type == "doctor":
         patients = Patient.objects.filter(doctor = request.user.doctor)
-        user = request.user
+        # user = request.user
     else:
         patients = Patient.objects.all()
-        user = request.user
+        # user = request.user
     
-    args = {"patients" : patients, "user":user}
+    args = {"patients" : patients}
     return render(request, 'scheduling/view_patients.html', args)
 
 def reports(request):
@@ -217,6 +217,7 @@ def make_appointments(request):
         data_input = date.today()
         print(data_input)
     selected_date = Appointment.objects.filter(date = data_input).values_list('timeslot', flat=True)
+    print(selected_date)
     available_appointments = [(value, time) for value, time in Appointment.TIMESLOT_LIST if value not in selected_date]
 
     if request.method == 'POST':
@@ -224,7 +225,10 @@ def make_appointments(request):
         if form.is_valid():
             form.save()
             success = "Appointment created!"
-            return render(request, 'scheduling/make_appointments.html', {"success" : success})
+            form = AppointmentForm
+            return render(request, 'scheduling/make_appointments.html', {"success" : success,"form":form})
+        else:
+            print("invalid")
     else:
         form = AppointmentForm
         args = {
@@ -237,8 +241,8 @@ def make_appointments(request):
 #################### doctors' views ####################
 def doctor_portal(request):
     appointments = Appointment.objects.filter(doctor=request.user.doctor.upin).order_by('date','timeslot')[:4]
-    # doctor = User.objects.get(doctor=request.user.doctor)
-    # heading = "Welcome, Dr. " +  str(doctor)
+    appointments_today = Appointment.objects.filter(doctor=request.user.doctor.upin).filter(date=datetime.now().date()).count()
+    print(appointments_today)
     args = {"appointments" : appointments}
     return render(request, 'scheduling/doctor.html', args)
 
