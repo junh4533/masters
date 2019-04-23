@@ -21,13 +21,7 @@
     <link href='https://fonts.googleapis.com/css?family=Encode Sans Expanded' rel='stylesheet'>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
-    <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" />
-</head>
-
-<body>
-
-    {% block content%}
-    {% endblock %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" type="text/css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -35,7 +29,18 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js">
     </script>
+    {% comment %} <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.5.2/themes/smoothness/jquery-ui.css"> {% endcomment %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
+</head>
+
+<body>
+
+    {% block content%}
+    {% endblock %}
+
 </body>
 
 </html>

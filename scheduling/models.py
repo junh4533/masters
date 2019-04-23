@@ -13,7 +13,7 @@ class User(AbstractUser):
         ('assistant', 'Assistant'),
     )
 
-    user_type = models.CharField(choices=users, max_length=9, default='patient')
+    user_type = models.CharField(choices=users, max_length=9)
 
     #return the users' name
     def __str__(self):
@@ -21,11 +21,10 @@ class User(AbstractUser):
 
 class Doctor(models.Model):
     upin = models.AutoField(primary_key=True) #unique physician identification number
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE) #user id
     user.user_type = "doctor"
     specialty = models.CharField(max_length=20)
-    # appointments_per_hour = models.IntegerField(null=True)
-    picture = models.ImageField(upload_to = 'doctors', default = '')
+    picture = models.ImageField(upload_to = 'doctors')
 
     #return the doctors' name
     def __str__(self):
@@ -36,7 +35,7 @@ class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete = models.CASCADE, related_name='patient_doctor', null=True)
     user.user_type = "patient"
-    picture = models.ImageField(upload_to = 'patients', default = '')
+    picture = models.ImageField(upload_to = 'patients')
 
     #return the patients' name
     def __str__(self):
@@ -49,7 +48,7 @@ def create_user_profile(sender, instance, created, **kwargs):
             Doctor.objects.create(user=instance)
         elif instance.user_type == "patient":
             Patient.objects.create(user=instance)
-
+            
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     if instance.user_type == "doctor":
@@ -73,12 +72,7 @@ class Appointment(models.Model):
     date = models.DateField(default=date.today)
     timeslot = models.IntegerField(choices=TIMESLOT_LIST, null=True)
     doctor = models.ForeignKey(Doctor, on_delete = models.CASCADE, related_name='appointment_doctor')
-    # doctor =  models.OneToOneField(Doctor, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE, related_name='appointment_patient')
-    # patient =  models.OneToOneField(Patient, on_delete=models.CASCADE)
-
-    # class Meta:
-    #     unique_together = ["date", "timeslot", "doctor"]
 
     def __str__(self):
         return str(self.doctor) + " " + str(self.patient) + " - " + str(self.get_timeslot_display()) +" "+str(self.date)

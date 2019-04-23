@@ -1,41 +1,42 @@
-{% extends 'scheduling/portal_template.html' %}
-<!-- Links base.html as a HTML template -->
+{% extends 'scheduling/dashboard_template.html' %}
+{% load staticfiles %}
 {% load static %}
 {% load crispy_forms_tags %}
 
 {% block content %}
-{% if user.is_authenticated and user.user_type != "patient" or user.user_type != "doctor" %}
 <!--check for login-->
+{% if user.is_authenticated and user.user_type != "patient" or user.user_type != "doctor" %}
+
 <!-- Topbar -->
 <div id="topbar">
-    <h4>Welcome, Assistant</h4>
-    <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
+    <h4>Welcome back, {{user}}</h4>
 </div>
 
-<div class="row">
-    <div class="col-sm-2">
+<div class="row container-fluid">
+    <div class="col-sm-2 sidebar">
         <!-- Sidebar -->
         <div id="sidebar">
-            <a href="appointments/">Appointments</a>
-            <a href="patients/">Doctors</a>
-            <a href="patients/">Patients</a>
-            <a href="reports/">Reports</a>
-            <a href="settings/">Setting</a>
+            <a href="{% url 'assistant_portal' %}"><i class="fa fa-home"></i> Home</a>
+            <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule an Appointment</a>
+            <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add a User</a>
+            <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
+            <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
         </div>
-
     </div>
+
     <div class="col-sm-10">
-        <br>
+        <h2 id="dashboard">Dashboard</h2>
+        <hr>
         <!-- Main content -->
         <div class="row" id="preview_row">
 
-            <div class="col-6" id="appointments">
-                <h1>Upcoming Appointments</h1>
+            <div class="col-sm-6" id="appointments">
+                <h3>Upcoming Appointments</h3>
 
                 <div class="container-fluid">
                     <table class="table table-dark table-striped">
                         <thead>
-                            <tr>    
+                            <tr>
                                 <th>Date</th>
                                 <th>Timeslot</th>
                                 <th>Doctor</th>
@@ -44,12 +45,12 @@
                         </thead>
                         <tbody>
                             {% for appointment in appointments %}
-                                <tr>
-                                    <td>{{ appointment.date }}</td>
-                                    <td>{{ appointment.get_timeslot_display }}</td>
-                                    <td>{{ appointment.doctor }}</td>
-                                    <td>{{ appointment.patient }}</td>
-                                </tr>
+                            <tr>
+                                <td>{{ appointment.date }}</td>
+                                <td>{{ appointment.get_timeslot_display }}</td>
+                                <td>{{ appointment.doctor }}</td>
+                                <td>{{ appointment.patient }}</td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -57,40 +58,45 @@
 
             </div>
 
-            <div class="col-6" id="chart">
+            <div class="col-sm-6" id="chart">
                 <div id="container"></div>
-                <script src="https://code.highcharts.com/highcharts.src.js"></script>
                 <script>
                     Highcharts.chart('container', {
-                        chart:{
-                            type:'column'
+                        chart: {
+                            type: 'column'
                         },
-                        title:{
-                            text:'Test Appointment Chart'
+                        title: {
+                            text: 'Test Appointment Chart'
                         },
-                    
-                        xAxis:{
-                            categories:{{categories|safe}},
+
+                        xAxis: {
+                            categories: {
+                                {
+                                    categories | safe
+                                }
+                            },
                             color: 'green'
                         },
-                        yAxis:{
-                            title:{
-                                text:'Number of appointment'
+                        yAxis: {
+                            title: {
+                                text: 'Number of appointment'
                             }
                         },
-                        series: [{ 
-                            name:'Appointments',
-                            data:{{appointment_count}}
+                        series: [{
+                            name: 'Appointments',
+                            data: {
+                                {
+                                    appointment_count
+                                }
+                            }
                         }],
                     });
                 </script>
             </div>
         </div>
-        <br>
         <div class="row" id="icon_row">
-
             <!-- Appointments -->
-            <div class="col-2 icon_box" id="icon1">
+            <div class="col-sm-3 icon_box" id="icon1">
                 <a href="../appointments">
                     <span class="icon row-icon">
                         <i class="fas fa-calendar-alt"></i>
@@ -99,8 +105,8 @@
                 <div class="icon_description">Appointments</div>
             </div>
 
-             <!-- Patients -->
-            <div class="col-2 icon_box" id="icon2">
+            <!-- Patients -->
+            <div class="col-sm-3 icon_box" id="icon2">
                 <a href="../patients">
                     <span class="icon row-icon">
                         <i class="fas fa-users"></i>
@@ -110,7 +116,7 @@
             </div>
 
             <!-- Doctors -->
-            <div class="col-2 icon_box" id="icon5">
+            <div class="col-sm-3 icon_box" id="icon3">
                 <a href="../doctors">
                     <span class="icon row-icon">
                         <i class="fas fa-user-md"></i>
@@ -119,8 +125,8 @@
                 <div class="icon_description">Doctors</div>
             </div>
 
-             <!-- Reports -->
-            <div class="col-2 icon_box" id="icon3">
+            <!-- Reports -->
+            <div class="col-sm-3 icon_box" id="icon4">
                 <a href="../reports">
                     <span class="icon row-icon">
                         <i class="fas fa-file"></i>
@@ -129,19 +135,17 @@
                 <div class="icon_description">Reports</div>
             </div>
 
-            <!-- Settings -->
-            <div class="col-2 icon_box" id="icon4">
-                <a href="../settings">
-                    <span class="icon row-icon">
-                        <i class="fas fa-cogs"></i>
-                    </span>
-                </a>
-                <div class="icon_description">Setting</div>
-            </div>
-
         </div>
+        {% if success %}
+            <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Success!</strong> {{success}}
+            </div>
+        {% endif %}
 
     </div>
+
+
 
 </div>
 

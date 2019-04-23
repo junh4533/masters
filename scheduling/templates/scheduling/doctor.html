@@ -1,112 +1,107 @@
-{% extends 'scheduling/portal_template.html' %}
+{% extends 'scheduling/dashboard_template.html' %}
+{% load staticfiles %}
 {% load static %}
 {% load crispy_forms_tags %}
 
 {% block content %}
-{% if user.is_authenticated and user.user_type == "doctor" %}
-<!--check for login-->
+{% if user.is_authenticated and user.user_type == "doctor"  %}
+
 <!-- Topbar -->
 <div id="topbar">
-    <h4>Welcome, Doctor</h4>
-    <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
+  <h4>Welcome back, Dr. {{user}}</h4>
 </div>
 
-<div class="row">
-    <div class="col-sm-2">
-        <!-- Sidebar -->
-        <div id="sidebar">
-            <a href="appointments/">Appointments</a>
-            <a href="patients/">Doctors</a>
-            <a href="patients/">Patients</a>
-            <a href="reports/">Reports</a>
-            <a href="settings/">Setting</a>
-        </div>
+<div class="row container-fluid">
 
+  <div class="col-2 sidebar">
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <a href="{% url 'doctor_portal' %}"><i class="fa fa-home"></i> Home</a>
+      <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
+      <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
     </div>
-    <div class="col-sm-10">
-        <br>
-        <!-- Main content -->
-        <div class="row" id="preview_row">
+  </div>
 
-            <div class="col-6" id="appointments">
-                <h1>Upcoming Appointments</h1>
+  <div class="col-10">
+    <h2 id="dashboard">Dashboard</h2>
+    <hr>
+    <!-- Main content -->
 
-                <div class="container-fluid">
-                    <table class="table table-dark table-striped">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Timeslot</th>
-                                <th>Doctor</th>
-                                <th>Patient</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for appointment in appointments %}
-                            <tr>
-                                <td>{{ appointment.date }}</td>
-                                <td>{{ appointment.get_timeslot_display }}</td>
-                                <td>{{ appointment.doctor }}</td>
-                                <td>{{ appointment.patient }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+    <div class="row container-fluid">
 
-            </div>
-
-            <div class="col-6" id="pie_chart">
-                <img src="{% static 'images/pie.png' %}">
-            </div>
+      <div class="col-5" id="upcoming">
+        <h3>Upcoming Appointments</h3>
+        {% for appointment in appointments %}
+        <div class="media p-3">
+          <img src="{{ appointment.patient.picture.url }}" class="align-self-start mr-3" style="width:80px; height:80px;">
+          <div class="vl"></div>
+          &nbsp;
+          <div class="media-body">
+            <h4>{{ appointment.patient }} <small><i>{{ appointment.date }}</i></small></h4>
+            <h5>{{ appointment.get_timeslot_display }}</h5>
+          </div>
         </div>
         <br>
-        <div class="row" id="icon_row">
+        {% endfor %}
+      </div>
 
-            <!-- Appointments -->
-            <div class="col-3 icon_box" id="icon1">
-                <a href="../appointments">
-                    <span class="icon">
-                        <i class="fas fa-calendar-alt"></i>
-                    </span>
-                </a>
-                <div class="icon_description">Appointments</div>
-            </div>
+      <div class="col-6" id="icon_row">
+        <div class="row container-fluid">
+          <!-- Appointments -->
+          <div class="col-6 icon_box" id="icon1">
+            <a href="../appointments">
+              <span class="icon row-icon">
+                <i class="fas fa-calendar-alt"></i>
+              </span>
+            </a>
+            <div class="icon_description">Appointments</div>
+          </div>
 
-            <!-- Patients -->
-            <div class="col-3 icon_box" id="icon2">
-                <a href="../patients">
-                    <span class="icon">
-                        <i class="fas fa-users"></i>
-                    </span>
-                </a>
-                <div class="icon_description">Patients</div>
-            </div>
+          <!-- Patients -->
+          <div class="col-6 icon_box" id="icon2">
+            <a href="../patients">
+              <span class="icon row-icon">
+                <i class="fas fa-users"></i>
+              </span>
+            </a>
+            <div class="icon_description">Patients</div>
+          </div>
 
-            <!-- Reports -->
-            <div class="col-3 icon_box" id="icon3">
-                <a href="../reports">
-                    <span class="icon">
-                        <i class="fas fa-users"></i>
-                    </span>
-                </a>
-                <div class="icon_description">Reports</div>
-            </div>
+          <!-- Reports -->
+          <div class="col-6 icon_box" id="icon3">
+            <a href="../reports">
+              <span class="icon row-icon">
+                <i class="fas fa-file"></i>
+              </span>
+            </a>
+            <div class="icon_description">Reports</div>
+          </div>
 
-            <!-- Settings -->
-            <div class="col-3 icon_box" id="icon4">
-                <a href="../profile/">
-                    <span class="icon">
-                        <i class="fas fa-cogs"></i>
-                    </span>
-                </a>
-                <div class="icon_description">Profile</div>
-            </div>
+
+          <!-- Profile -->
+          <div class="col-6 icon_box" id="icon4">
+            <a href="../profile">
+              <span class="icon row-icon">
+                <i class="fas fa-id-badge"></i>
+              </span>
+            </a>
+            <div class="icon_description">Profile</div>
+          </div>
 
         </div>
+
+      </div>
 
     </div>
 
+    {% if success %}
+    <div class="alert alert-success alert-dismissible fade show">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Success!</strong> {{success}}
+    </div>
+    {% endif %}
+
+  </div>
 </div>
 
 {% else %}

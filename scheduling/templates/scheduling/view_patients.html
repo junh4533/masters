@@ -1,47 +1,65 @@
-{% extends 'scheduling/portal_template.html' %}
-<!-- Links base.html as a HTML template -->
+{% extends 'scheduling/dashboard_template.html' %}
 {% load static %}
+{% load staticfiles %}
 {% load crispy_forms_tags %}
 
 {% block content %}
-{% if user.is_authenticated and user.user_type == "assistant" or user.user_type != "doctor" %}
-<!--check for login-->
-<!-- Topbar -->
+{% if user.is_authenticated and user.user_type == "doctor" %}
+
 <div id="topbar">
-    <h4>Welcome {{ user }}</h4>
+    <h4>Welcome, Dr. {{user}}</h4>
     <a href="{%url 'logout'%}" id="logout_icon"> Logout <span> <i class="fas fa-sign-out-alt"></i> </span> </a>
 </div>
 
-<div class="row">
-    <div class="col-sm-2">
-        <!-- Sidebar -->
+<div class="row container-fluid">
+    <div class="col-sm-2 sidebar">
         <div id="sidebar">
-            <a href="appointments/">Appointments</a>
-            <a href="patients/">Doctors</a>
-            <a href="patients/">Patients</a>
-            <a href="reports/">Reports</a>
-            <a href="settings/">Setting</a>
+            <a href="{% url 'doctor_portal' %}"><i class="fa fa-home"></i> Home</a>
+            <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
+            <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
         </div>
-
     </div>
-    <div class="col-sm-10">
-        <br>
-        <!-- Main content -->
-        <div id="main_content">
 
-            {% for patient in patients %}
-                <div class="card" style="width:400px">
-                    <img class="card-img-top" src="{{ patient.picture.url }}">
-                    <div class="card-body center">
-                        <h4 class="card-title">{{ patient.user }}</h4>
-                        <p class="card-text">PID: {{ patient.pid }}</p>
+    {% elif user.is_authenticated %}
+
+    <div id="topbar">
+        <h4>Welcome, {{user}}</h4>
+    </div>
+
+    <div class="row container-fluid">
+        <div class="col-sm-2 sidebar">
+            <!-- Sidebar -->
+            <div id="sidebar">
+                <a href="{% url 'assistant_portal' %}"><i class="fa fa-home"></i> Home</a>
+                <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule an Appointment</a>
+                <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add a User</a>
+                <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
+                <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+
+        <div class="col-sm-10">
+            <br>
+            <!-- Main content -->
+            <div id="main_content">
+
+                {% for patient in patients %}
+                    <div class="card">
+                        <img class="card-img-top" src="{{ patient.picture.url }}">
+                        <div class="card-body center">
+                            <h4 class="card-title">{{ patient.user }}</h4>
+                            <p class="card-text">PID: {{ patient.pid }}</p>
+                        </div>
                     </div>
-                </div>
-                <br>
-            {% endfor %}
+                    &nbsp;
+                {% endfor %}
+            </div>
         </div>
-    </div>
 
+    </div>
 </div>
 
 {% else %}

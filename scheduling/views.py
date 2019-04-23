@@ -22,16 +22,19 @@ import json
 
 #for reports
 from .filter import UserFilter
-
+from datetime import datetime
 
 #################### generic views ####################
 def user_login(request):
-    if request.method =="POST":
+    if request.method == "POST":
         form = LoginForm(request.POST)
+        print("wrong")
         if form.is_valid():
             cd = form.cleaned_data
             user = authenticate(request, username=cd['username'], password=cd['password'])
-            if user is not None:
+            # if user is not None:
+            if request.user.is_authenticated:
+                print("wrong")
                 if user_type=="patient":
                     login(request, user)
                     return redirect('patient_portal')
@@ -43,7 +46,7 @@ def user_login(request):
                     return redirect('assistant_portal')
     else:
         form = LoginForm()
-    return render(request,'registration/login.html',{'form':form})
+        return render(request,'registration/login.html',{'form':form})
 
 def index(request):
     if request.user.is_authenticated:
@@ -53,26 +56,26 @@ def index(request):
             return redirect('patient_portal')
         else:
             return redirect('assistant_portal')
+    else:
+        return redirect('home/login')
 
 def all_appointments(request):
-    if request.user.user_type == "assistant":
-        all_appointments = Appointment.objects.all().order_by('date','timeslot')
-        user = request.user.first_name + " " + request.user.last_name
-    elif request.user.user_type == "doctor":
+    if request.user.user_type == "doctor":
         all_appointments = Appointment.objects.filter(doctor = request.user.doctor.upin).order_by('date').order_by('timeslot')
-        user = "Dr. " + request.user.first_name + " " + request.user.last_name
-    
+    else:
+        all_appointments = Appointment.objects.all().order_by('date','timeslot')
     return render(request, 'scheduling/appointments.html', {"all_appointments" : all_appointments})
 
 def patients(request):
-    if request.user.user_type == "assistant":
-        patients = Patient.objects.all()
-        user = request.user.first_name + " " + request.user.last_name
-    else:
+    if request.user.user_type == "doctor":
         patients = Patient.objects.filter(doctor = request.user.doctor)
-        user = "Dr. " + request.user.first_name + " " + request.user.last_name
-
-    return render(request, 'scheduling/view_patients.html', {"patients" : patients, "user" : user})
+        user = request.user
+    else:
+        patients = Patient.objects.all()
+        user = request.user
+    
+    args = {"patients" : patients, "user":user}
+    return render(request, 'scheduling/view_patients.html', args)
 
 def reports(request):
     return render(request, 'scheduling/reports.html')
@@ -114,15 +117,9 @@ def change_password(request):
         args = {'form':form, 'heading':heading}
         return render(request, 'registration/profile.html', args)
 
-
 #################### assistants' views ####################
-class SignUp(generic.CreateView):
-    form_class = CustomCreationForm
-    success_url = reverse_lazy('add_user')
-    template_name = 'registration/add_user.html'
-
 def assistant_portal(request):
-    appointments = Appointment.objects.all().order_by('date','timeslot')[:5]
+    appointments = Appointment.objects.all().order_by('date','timeslot').filter(date__gte=datetime.now())[:5]
     #generate chart
     dataset = Appointment.objects\
         .values('doctor',
@@ -137,24 +134,74 @@ def assistant_portal(request):
     for entry in dataset:
         categories.append('%s Doctor' % entry['doctor__user__last_name'])
         appointment_count.append(entry['appointment_count'])
-    return TemplateResponse(request, 'scheduling/assistant.html', 
+    return render(request, 'scheduling/assistant.html', 
     {"appointments" : appointments,
     "categories":json.dumps(categories),
-    "appointment_count":json.dumps(appointment_count)})
+    "appointment_count":json.dumps(appointment_count),
+    })
+
+def add_user(request):
+    if request.method == 'POST':
+        form = CustomCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user_type = form.cleaned_data['user_type']
+            request.session['first_name'] = form.cleaned_data['first_name']
+            request.session['last_name'] = form.cleaned_data['last_name']
+            if user_type == "doctor":
+                return redirect('../add_doctor_info/')
+            elif user_type == "patient":
+                return redirect('../add_patient_info/')
+            elif user_type == "assistant":
+                success = "Assistant added!"
+                appointments = Appointment.objects.all().order_by('date','timeslot').filter(date__gte=datetime.now())[:5]
+                args = {'success':success, "appointments":appointments}
+                return render(request, 'scheduling/assistant.html', args)
+        else:
+            form = CustomCreationForm
+            return render(request, 'registration/add_user.html', {'form':form})
+    else:
+        form = CustomCreationForm
+        return render(request, 'registration/add_user.html', {'form':form})
+
+# to add additional information for doctors like specialty/picture
+def add_doctor_info(request):
+    fn = request.session['first_name'] 
+    ln = request.session['last_name']
+    doctor = User.objects.get(first_name=fn, last_name=ln).doctor
+    if request.method == 'POST':
+        form = AddDoctorInfo(request.POST, request.FILES, instance=doctor)
+        print(form.errors)
+        if form.is_valid():
+            form.save()
+            success = "Doctor successfully added"
+            return render(request, 'scheduling/assistant.html', {'success':success})
+    else:
+        heading = "Please provide additional information for the doctor"
+        form = AddDoctorInfo(instance=doctor)
+        return render(request, 'registration/add_user.html', {'form':form,'heading':heading})
+
+# to add additional information for paitents like doctor/picture
+def add_patient_info(request):
+    fn = request.session['first_name'] 
+    ln = request.session['last_name']
+    patient = User.objects.get(first_name=fn, last_name=ln).patient
+    if request.method == 'POST':
+        form = AddPatientInfo(request.POST, request.FILES, instance=patient)
+        print(form.errors)
+        if form.is_valid():
+            form.save()
+            success = "Patient successfully added"
+            return render(request, 'scheduling/assistant.html', {'success':success})
+    else:
+        heading = "Please provide additional information for " +fn + " " + ln
+        form = AddPatientInfo(instance=patient)
+        return render(request, 'registration/add_user.html', {'form':form,'heading':heading})
     
 def doctors(request):
     doctors = Doctor.objects.all()
-    return render(request, 'scheduling/view_doctors.html', {"doctors" : doctors})
-
-def make_appointment(request):
-    if request.method == 'POST':
-        form = AppointmentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('../appointments/')
-    else:
-        form = AppointmentForm(request.POST)
-        return render(request, 'scheduling/assistant.html', {"form" : form})
+    args = {"doctors" : doctors}
+    return render(request, 'scheduling/view_doctors.html', args)
 
 def assistant_report(request):
     appointments = Appointment.objects.all().order_by('date').order_by('timeslot')
@@ -164,32 +211,42 @@ def assistant_report(request):
     'appointments':appointments}
     )
 
+def make_appointments(request):
+    data_input = request.GET.get('date')
+    if not data_input:
+        data_input = date.today()
+        print(data_input)
+    selected_date = Appointment.objects.filter(date = data_input).values_list('timeslot', flat=True)
+    available_appointments = [(value, time) for value, time in Appointment.TIMESLOT_LIST if value not in selected_date]
+
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            success = "Appointment created!"
+            return render(request, 'scheduling/make_appointments.html', {"success" : success})
+    else:
+        form = AppointmentForm
+        args = {
+            "form" : form, 
+            "available_appointments" : available_appointments, 
+            "data_input": data_input, 
+        }
+        return render(request, 'scheduling/make_appointments.html', args)
 
 #################### doctors' views ####################
 def doctor_portal(request):
-    appointments = Appointment.objects.filter(doctor=request.user.doctor.upin).order_by('date','timeslot')[:5]
-    return TemplateResponse(request, 'scheduling/doctor.html', {"appointments" : appointments})
-
-# for doctors to add additional information like specialty/appointments per hour
-def add_info(request):
-    form = AddSpecialtyForm(request.POST, instance=request.user.doctor)
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
-            return redirect('../../profile/')
-    else:   
-        heading = "Add your specialty"
-        return render(request, 'registration/profile.html', {'form':form,'heading':heading})
-
+    appointments = Appointment.objects.filter(doctor=request.user.doctor.upin).order_by('date','timeslot')[:4]
+    # doctor = User.objects.get(doctor=request.user.doctor)
+    # heading = "Welcome, Dr. " +  str(doctor)
+    args = {"appointments" : appointments}
+    return render(request, 'scheduling/doctor.html', args)
 
 #################### patients' views ####################
 def patient_portal(request):
     data_input = request.GET.get('date')
-    # datetimeobject = datetime.strptime(data_input,'%m/%d/%Y')
-    # newformat = datetimeobject.strftime('%Y-%m-%d')
-    # print(newformat)
     print(data_input)
-    #imported datetime to show only upcoming appointment
+    patient = User.objects.get(patient=request.user.patient)
     appointments = Appointment.objects.filter(patient=request.user.patient.pid).filter(date__gte=datetime.now()-timedelta(days=1)).order_by('date','timeslot')
     selected_date = Appointment.objects.filter(date = data_input).values_list('timeslot', flat=True)
     available_appointments = [(value, time) for value, time in Appointment.TIMESLOT_LIST if value not in selected_date]
@@ -209,6 +266,6 @@ def patient_portal(request):
             "available_appointments" : available_appointments, 
             "data_input": data_input, 
             "doctor": doctor, 
-            "doctor_pic":doctor_pic
+            "doctor_pic": doctor_pic,
         }
         return render(request, 'scheduling/patient.html', args)

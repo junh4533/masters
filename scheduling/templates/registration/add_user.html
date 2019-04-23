@@ -1,21 +1,35 @@
-{% extends 'scheduling/base.html' %} <!-- Links layout.html as a HTML template -->
+{% extends 'scheduling/dashboard_template.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
 
 <div class="row">
-  <div class="container col-2 col-lg-3"></div>
+      <div class="container col-2 col-lg-3"></div>
+      <div class="container col-8 col-lg-6">
 
-  <div class="container col-8 col-lg-6 box">
-      
-    <div class="tab-content jumbotron form_container">
-          <h2>Register a doctor/patient</h2>
-          <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
-                {{ form|crispy }} 
-                <button type="submit" class="btn btn-primary">Register</button>
-          </form>
-    </div>
-  </div>
+            <div class="jumbotron form_container">
+                  <h2>Add a User</h2>
+                  <form method="post" enctype="multipart/form-data">{% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-info">Register</button>
+                  </form>
 
-   <div class="container col-2 col-lg-3"></div>
+                  <button class="btn btn-dark">
+                        <a href="{% url 'assistant_portal' %}">Return</a>
+                  </button>
 
-{% endblock %}
+                  {% if success  %}
+                  <div class="toast">
+                        <div class="toast-header">
+                              {{success}}
+                        </div>
+                        <div class="toast-body">
+                              {{form.patient.value}}
+                        </div>
+                  </div>
+                  {% endif %}
+            </div>
+      </div>
+
+      <div class="container col-2 col-lg-3"></div>
+
+      {% endblock %}

@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'scheduling',
     'crispy_forms',
     'django_filters',
-    # 'swingtime',
+    'widget_tweaks',
 ]
 
 AUTH_USER_MODEL = 'scheduling.User'
@@ -136,7 +136,7 @@ LOGOUT_REDIRECT_URL = 'login'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# DATE_INPUT_FORMATS = ['%m/%d/%Y']
+# SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 
 
