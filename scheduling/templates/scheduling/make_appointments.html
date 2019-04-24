@@ -1,5 +1,6 @@
 {% extends 'scheduling/dashboard_template.html' %}
 {% load static %}
+{% load staticfiles %}
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
 
@@ -11,7 +12,7 @@
         <button type="submit" class="btn btn-primary">Confirm</button>
     </form>
 </div>
-{% elif user.is_authenticated %}
+{% elif user.is_authenticated and user.user_type == "assistant" %}
 
 <div class="row container-fluid">
     <div class="col-2 sidebar">

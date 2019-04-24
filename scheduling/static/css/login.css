@@ -85,3 +85,29 @@ nav {
 .text-muted {
     color: #AAAAAA !important;
 }
+
+/*************** css for the calendar ******************/
+.bootstrap-datetimepicker-widget table td.active{
+    background-color:#e6e6fa;
+    color:black;
+}
+
+.bootstrap-datetimepicker-widget table td.active:hover, 
+.bootstrap-datetimepicker-widget table td.day:hover{
+    background-color:#17a2b8;
+    color: white;
+}
+
+.bootstrap-datetimepicker-widget table td.active.today:before{
+    border-bottom-color: #17a2b8;
+}
+
+.bootstrap-datetimepicker-widget table td.day {
+    line-height: 50px;
+}
+
+.datepicker table tr td,
+.datepicker table tr th {
+    width: 30px;
+    height: 30px;
+}

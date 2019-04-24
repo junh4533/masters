@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+{% if user.is_authenticated and user.user_type == "assistant" %}
 <div class="row">
       <div class="container col-2 col-lg-3"></div>
 
@@ -20,4 +21,5 @@
       <div class="container col-2 col-lg-3"></div>
 </div>
 
+{% endif %}
 {% endblock %}

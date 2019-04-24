@@ -4,7 +4,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-{% if user.is_authenticated and user.user_type != "patient" or user.user_type != "doctor" %}
+{% if user.is_authenticated and user.user_type == "assistant" %}
 
 <div class="row container-fluid">
     <div class="col-2 sidebar">
@@ -13,7 +13,7 @@
             <i class="fas fa-user-shield" style="font-size:60px;"></i>
             <br><br>
             <h5>{{user}} </h5>
-            <h6>{{user.user_type}} </h6>
+            <h6>{{user.user_type}}</h6>
         </div>
 
         <a href="{% url 'assistant_portal' %}"><i class="fa fa-home"></i> Home</a>
@@ -71,16 +71,10 @@
                             type: 'column'
                         },
                         title: {
-                            text: 'Test Appointment Chart'
+                            text: 'Appointments'
                         },
-
                         xAxis: {
-                            categories: {
-                                {
-                                    categories | safe
-                                }
-                            },
-                            color: 'green'
+                            categories: [{{categories|safe}}],
                         },
                         yAxis: {
                             title: {
@@ -89,11 +83,7 @@
                         },
                         series: [{
                             name: 'Appointments',
-                            data: {
-                                {
-                                    appointment_count
-                                }
-                            }
+                            data: {{appointment_count}}
                         }],
                     });
                 </script>

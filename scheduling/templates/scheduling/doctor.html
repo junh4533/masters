@@ -15,9 +15,10 @@
       <br><br>
       <h5> Dr. {{user}} </h5>
       <h6>{{user.doctor.specialty}} </h6>
+      <br>
+      <h6>Appointments today: {{appointments_today}}</h6>
     </div>
 
-    <h6>Appointments scheduled for today: </h6>
     <a href="{% url 'doctor_portal' %}"><i class="fa fa-home"></i> Home</a>
     <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
     <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>

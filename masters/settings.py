@@ -138,6 +138,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'EZDoctPortal@gmail.com'
+EMAIL_HOST_PASSWORD = 'EZDoctPortal123'
+EMAIL_USE_TLS = True
+
+
+
 
 
 

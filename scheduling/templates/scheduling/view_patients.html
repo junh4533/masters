@@ -28,7 +28,7 @@
 
     </div>
 
-    {% elif user.is_authenticated %}
+    {% elif user.is_authenticated and user.user_type == "assistant" %}
 
     <div class="col-2 sidebar">
         <br>
