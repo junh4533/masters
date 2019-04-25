@@ -30,13 +30,10 @@ from django.core.mail import send_mail
 def user_login(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
-        print("wrong")
         if form.is_valid():
             cd = form.cleaned_data
             user = authenticate(request, username=cd['username'], password=cd['password'])
-            # if user is not None:
             if request.user.is_authenticated:
-                print("wrong")
                 if user_type=="patient":
                     login(request, user)
                     return redirect('patient_portal')

@@ -10,6 +10,5 @@ $(document).ready(function () {
         $('#datepicker').submit();
     });
 
-
-
+    // $("#login").modal({"backdrop": "static"});
 });

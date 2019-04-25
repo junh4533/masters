@@ -28,7 +28,7 @@
         <h6>KungFuMD</h6>
       </div>
 
-    </div>
+  </div>
 
     <h2 id="dashboard">Dashboard</h2>
     <br>
@@ -42,7 +42,7 @@
       </form>
     </div>
 
-    <div class="col-sm-4" id="upcoming">
+    <div class="col-sm-4" id="upcoming" style="overflow:scroll">
       <h2>Search Result</h2>
       <hr>
       {% for appointment in filter.qs %}
@@ -61,7 +61,7 @@
 
    {% elif user.is_authenticated and user.user_type == "assistant" %}
 
-    <div id="profile">
+  <div id="profile">
       <i class="fas fa-user-shield" style="font-size:60px;"></i>
       <br><br>
       <h5>{{user}} </h5>
@@ -78,8 +78,33 @@
       <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:30px;">
       <h6>KungFuMD</h6>
     </div>
-
+    
   </div>
+  <div class="col-sm-4" id="appointment">
+      <h1>Appointment Search</h1>
+      <form method="get" action="">
+        <div class="form-group">
+          {{filter.form|crispy}}
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+
+    <div class="col-sm-4" id="upcoming" style="overflow-y:scroll;height:400px;">
+      <h2>Search Result</h2>
+      <hr>
+      {% for appointment in filter.qs %}
+      <div class="media p-3">
+        <div class="vl"></div>
+        &nbsp;
+        <div class="media-body">
+          <h4>Dr. {{appointment.doctor}} - {{ appointment.patient }} <small><i>{{ appointment.date }}</i></small></h4>
+          <h5>{{ appointment.get_timeslot_display }}</h5>
+        </div>
+      </div>
+      <br>
+      {% endfor %}
+    </div>
 
 </div>
 
