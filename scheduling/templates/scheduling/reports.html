@@ -4,7 +4,37 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<script>
+function CSV(csv, filename){
+  var File;
+  var Link;
 
+  File = new Blob([csv],{type:"text/csv"});
+  Link = document.createElement("a");
+  Link.download = filename;
+  Link.href = window.URL.createObjectURL(File);
+  Link.style.display = "none";
+  document.body.appendChild(Link);
+  Link.click();
+};
+
+function exportTableToCSV(filename) {
+  var csv = [];
+  var rows = document.querySelectorAll("table tr");
+  
+  for (var i = 0; i < rows.length; i++) {
+      var row = [], cols = rows[i].querySelectorAll("td, th");
+      
+      for (var j = 0; j < cols.length; j++) 
+          row.push(cols[j].innerText);
+      
+      csv.push(row.join(","));        
+  }
+  
+  // Download CSV file
+  CSV(csv.join("\n"), filename);
+}
+</script>
 <div class="row container-fluid">
 
   <div class="col-sm-2 sidebar">
@@ -29,33 +59,42 @@
       </div>
 
   </div>
-
-    <h2 id="dashboard">Dashboard</h2>
-    <br>
     <div class="col-sm-4" id="appointment">
       <h1>Appointment Search</h1>
       <form method="get" action="">
         <div class="form-group">
           {{filter.form|crispy}}
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-info">Search</button>
+        <button onclick="exportTableToCSV('Appointment_report.csv')" class="btn btn-info">Download Report</button>
       </form>
     </div>
 
-    <div class="col-sm-4" id="upcoming" style="overflow:scroll">
+    <div class="col-sm-4" id="appointments" style="overflow-y:scroll;height:400px;">
       <h2>Search Result</h2>
-      <hr>
-      {% for appointment in filter.qs %}
-      <div class="media p-3">
-        <div class="vl"></div>
-        &nbsp;
-        <div class="media-body">
-          <h4>Dr. {{appointment.doctor}} - {{ appointment.patient }} <small><i>{{ appointment.date }}</i></small></h4>
-          <h5>{{ appointment.get_timeslot_display }}</h5>
-        </div>
+      <div class="container-fluid">
+        <table class="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Timeslot</th>
+              <th>Doctor</th>
+              <th>Patient</th>
+            <tr>
+          <thead>
+          <tbody>  
+            {% for appointment in filter.qs %}
+            <tr>
+              <td>{{ appointment.date|date:"d-M-Y"}}</td>
+              <td>{{ appointment.get_timeslot_display }}</td>
+              <td>{{ appointment.doctor }}</td>
+              <td>{{ appointment.patient }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
-      <br>
-      {% endfor %}
+    </div>
     </div>
 
 
@@ -86,24 +125,37 @@
         <div class="form-group">
           {{filter.form|crispy}}
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-info">Search</button>
+        <button onclick="exportTableToCSV('Appointment_report.csv')" class="btn btn-info">Download Report</button>
+
       </form>
     </div>
 
-    <div class="col-sm-4" id="upcoming" style="overflow-y:scroll;height:400px;">
+    <div class="col-sm-6" id="appointments" style="overflow-y:scroll;height:400px;">
       <h2>Search Result</h2>
-      <hr>
-      {% for appointment in filter.qs %}
-      <div class="media p-3">
-        <div class="vl"></div>
-        &nbsp;
-        <div class="media-body">
-          <h4>Dr. {{appointment.doctor}} - {{ appointment.patient }} <small><i>{{ appointment.date }}</i></small></h4>
-          <h5>{{ appointment.get_timeslot_display }}</h5>
-        </div>
+      <div class="container-fluid">
+        <table class="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Timeslot</th>
+              <th>Doctor</th>
+              <th>Patient</th>
+            <tr>
+          <thead>
+          <tbody>  
+            {% for appointment in filter.qs %}
+            <tr>
+              <td>{{ appointment.date|date:"d-M-Y" }}</td>
+              <td>{{ appointment.get_timeslot_display }}</td>
+              <td>{{ appointment.doctor }}</td>
+              <td>{{ appointment.patient }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
-      <br>
-      {% endfor %}
+    </div>
     </div>
 
 </div>

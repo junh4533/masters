@@ -70,6 +70,15 @@ nav {
     color: #7FDBFF;
 }
 
+#warning {
+    /* z-index: 999999; */
+    margin: auto 1.5em;
+    width: 20%;
+    position: absolute;
+    top: 50px;
+    
+}
+
 /*************** jumbotron forms css ******************/
 
 .form_container>* {

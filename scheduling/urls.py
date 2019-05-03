@@ -24,6 +24,7 @@ urlpatterns = [
         path('home/', assistant.assistant_portal, name='assistant_portal'),
         path('appointments/', user.all_appointments, name='all_appointments'),
         path('make_appointments/', assistant.make_appointments, name='make_appointments'),
+        path('delete_appointment/', user.delete_appointment, name='delete_appointment'),
         path('patients/', user.patients, name='patients'),
         path('doctors/', assistant.doctors, name='all_doctors'),
         path('reports/', user.reports, name='reports'),

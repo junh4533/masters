@@ -2,6 +2,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: #e6e6fa;
+    overflow: hidden;
 }
 
 /* .col-3 {
@@ -17,13 +18,13 @@ body {
     text-align: center;
 }
 
-#main_content > * {
-    display:inline-block;
+#main_content>* {
+    display: inline-block;
 }
 
 .card-img-top {
-    width:250px;
-    height:200px;
+    width: 250px;
+    height: 200px;
 }
 
 .vl {
@@ -56,7 +57,7 @@ a:hover {
     padding: 0 0 0 0;
     border: 10px solid transparent;
     background-clip: padding-box;
-    display:inline-block;
+    display: inline-block;
 }
 
 .icon_box:hover {
@@ -77,7 +78,7 @@ a:hover {
 }
 
 #icon4 {
-    background-color: #ff7f50; 
+    background-color: #ff7f50;
 }
 
 .icon_description {
@@ -86,19 +87,6 @@ a:hover {
     filter: brightness(.8);
     font-size: 1.5em;
 }
-
-/*************** topbar css ******************/
-
-/* #topbar {
-    width: 100vw;
-    height: 5vh;
-    background-color: #0E2F44;
-    color: #f5f5f5;
-}
-
-#topbar h4 {
-    left: 15px;
-} */
 
 /*************** sidebar css ******************/
 
@@ -123,86 +111,111 @@ a:hover {
     color: black;
     background-color: white;
 }
-#pfp{
-    width:125px;
-    height:125px;
+
+#pfp {
+    width: 125px;
+    height: 125px;
 }
 
-#profile{
-    text-align:center;
-    color:white;
+#profile {
+    text-align: center;
+    color: white;
 }
 
-#footer{
+#footer {
     position: absolute;
-    width:100%;
-    bottom:0;
-    color:white;
+    width: 100%;
+    bottom: 0;
+    color: white;
     text-align: center;
 }
 
-#footer > *{
-    display:inline;
+#footer>* {
+    display: inline;
 }
 
-/*************** jumbotron form css ******************/
-.form_container>* {
+/*************** form css ******************/
+.form_container> form,button {
     display: inline;
 }
 
 .form_container {
     padding: 32px 32px 32px 32px;
-    background: rgba(0, 31, 63, 0.7);
-    color: #DDDDDD;
 }
 
 .text-muted {
     color: #AAAAAA !important;
 }
 
+.overflow-auto {
+    height: 90vh;
+}
+
+.overflow-auto::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+    background-color: #aaa;
+    /* or add it to the track */
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: rgb(9, 32, 46);
+}
+
+.form-control {
+    width: 90%;
+}
+
 /*************** scrollbar for the appointments table ******************/
-.fixed_header{
+.fixed_header {
     width: 800px;
     table-layout: fixed;
     border-collapse: collapse;
 }
 
-.fixed_header tbody{
-  display:block;
-  width: 100%;
-  overflow: auto;
-  height: 80vh;
+.fixed_header tbody {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    height: 80vh;
 }
 
 .fixed_header thead tr {
-   display: block;
+    display: block;
 }
 
 .fixed_header thead {
-  background: black;
-  color:#fff;
+    background: black;
+    color: #fff;
 }
 
-.fixed_header th, .fixed_header td {
-  padding: 5px;
-  text-align: left;
-  width: 200px;
-  height:50px;
+.fixed_header th,
+.fixed_header td {
+    padding: 5px;
+    text-align: left;
+    width: 200px;
+    height: 50px;
+}
+
+.trash{
+    width: 80px!important;
 }
 
 /*************** css for the calendar ******************/
-.bootstrap-datetimepicker-widget table td.active{
-    background-color:#e6e6fa;
-    color:black;
-}
-
-.bootstrap-datetimepicker-widget table td.active:hover, 
-.bootstrap-datetimepicker-widget table td.day:hover{
-    background-color:#17a2b8;
+.bootstrap-datetimepicker-widget table td.active {
+    /* background-color:#e6e6fa; */
+    /* color:black; */
+    background-color: #17a2b8;
     color: white;
 }
 
-.bootstrap-datetimepicker-widget table td.active.today:before{
+.bootstrap-datetimepicker-widget table td.active:hover,
+.bootstrap-datetimepicker-widget table td.day:hover {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.bootstrap-datetimepicker-widget table td.active.today:before {
     border-bottom-color: #17a2b8;
 }
 

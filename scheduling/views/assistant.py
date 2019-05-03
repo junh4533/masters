@@ -73,11 +73,12 @@ def add_user(request):
                 args = {'success':success, "appointments":appointments}
                 return render(request, 'scheduling/assistant.html', args)
         else:
-            form = CustomCreationForm
             return render(request, 'registration/add_user.html', {'form':form})
     else:
+        heading = "Add a User"
         form = CustomCreationForm
-        return render(request, 'registration/add_user.html', {'form':form})
+        args = {'form':form,'heading':heading}
+        return render(request, 'registration/add_user.html', args)
 
 # to add additional information for doctors like specialty/picture
 def add_doctor_info(request):
@@ -91,10 +92,13 @@ def add_doctor_info(request):
             form.save()
             success = "Doctor successfully added"
             return render(request, 'scheduling/assistant.html', {'success':success})
+        else:
+            return render(request, 'registration/add_user.html', {'form':form})
     else:
-        heading = "Please provide additional information for the doctor"
+        heading = "Please provide additional information for " + fn + " " + ln 
         form = AddDoctorInfo(instance=doctor)
-        return render(request, 'registration/add_user.html', {'form':form,'heading':heading})
+        args = {'form':form,'heading':heading}
+        return render(request, 'registration/add_user.html', args)
 
 # to add additional information for paitents like doctor/picture
 def add_patient_info(request):
@@ -108,32 +112,41 @@ def add_patient_info(request):
             form.save()
             success = "Patient successfully added"
             return render(request, 'scheduling/assistant.html', {'success':success})
+        else:
+            return render(request, 'registration/add_user.html', {'form':form})
     else:
-        heading = "Please provide additional information for " +fn + " " + ln
+        heading = "Please provide additional information for " + fn + " " + ln
         form = AddPatientInfo(instance=patient)
-        return render(request, 'registration/add_user.html', {'form':form,'heading':heading})
+        args = {'form':form,'heading':heading}
+        return render(request, 'registration/add_user.html', args)
     
 def doctors(request):
     doctors = Doctor.objects.all()
     args = {"doctors" : doctors}
     return render(request, 'scheduling/view_doctors.html', args)
 
-# def assistant_report(request):
-#     appointments = Appointment.objects.all().order_by('date').order_by('timeslot')
-#     user_filter = UserFilter(request.GET, queryset=appointments)
-#     return render(request,'scheduling/reports.html',
-#     {'filter': user_filter,
-#     'appointments':appointments}
-#     )
 
 def make_appointments(request):
+    # date_session = request.session['data_input']
     data_input = request.GET.get('date')
-    if not data_input:
+    print(data_input)
+    if data_input == None:
         data_input = date.today()
         print(data_input)
+
     selected_date = Appointment.objects.filter(date = data_input).values_list('timeslot', flat=True)
-    print(selected_date)
     available_appointments = [(value, time) for value, time in Appointment.TIMESLOT_LIST if value not in selected_date]
+    print(available_appointments)
+    # request.session['data_input'] = data_input
+    # date_session = data_input
+    # print("Input2: ", data_input)
+    form = AppointmentForm(request.POST)
+    args = {
+        "form" : form, 
+        "available_appointments" : available_appointments, 
+        "data_input": data_input, 
+        # "date_session": date_session,
+    }
 
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
@@ -142,18 +155,16 @@ def make_appointments(request):
             success = "Appointment created!"
             email = str(form.instance.patient.user.email)
             message = 'Appointment scheduled for ' + str(form.cleaned_data['date']) + " " + str(form.instance.get_timeslot_display())
-            send_mail('KungFuMD Appointment', message, 'EZDoctPortal@gmail.com', [email])
+            send_mail('EzDoc Appointment', message, 'EZDoctPortal@gmail.com', [email])
             print(email)
             print(message)
             form = AppointmentForm
             return render(request, 'scheduling/make_appointments.html', {"success" : success,"form":form})
         else:
-            print("invalid")
-    else:
-        form = AppointmentForm
-        args = {
-            "form" : form, 
-            "available_appointments" : available_appointments, 
-            "data_input": data_input, 
-        }
-        return render(request, 'scheduling/make_appointments.html', args)
+            print("invalid form")
+            return render(request, 'scheduling/make_appointments.html', {"form":form})
+    # elif request.method == 'GET':
+        
+    print("dsas")
+    return render(request, 'scheduling/make_appointments.html', args)
+    # elif request.method == 'GET':

@@ -50,7 +50,7 @@ def patient_portal(request):
                 "data_input": data_input, 
                 "doctor": doctor, 
             }
-            email = str(user.email)
+            email = str(request.user.email)
             message = 'Appointment scheduled for ' + str(form.cleaned_data['date']) + " " + str(form.instance.get_timeslot_display())
             send_mail('KungFuMD Appointment', message, 'EZDoctPortal@gmail.com', [email])
             print(email)

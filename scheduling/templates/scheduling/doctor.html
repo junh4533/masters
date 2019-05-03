@@ -20,7 +20,7 @@
     </div>
 
     <a href="{% url 'doctor_portal' %}"><i class="fa fa-home"></i> Home</a>
-    <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
+    <a href="../profile"><i class="fa fa-id-badge"></i> My Profile</a>
     <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
     
     <div id="footer"> 
@@ -37,7 +37,7 @@
 
     <div class="row container-fluid">
 
-      <div class="col-5" id="upcoming">
+      <div class="col-5" id="upcoming">.
         <h3>Upcoming Appointments</h3>
         {% for appointment in appointments %}
         <div class="media p-3">

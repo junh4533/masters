@@ -9,7 +9,7 @@
       <span class="w-100 d-lg-none d-block">
         <!-- hidden spacer to center brand on mobile --></span>
       <a class="navbar-brand d-none d-lg-inline-block" href="#">
-        <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:40px;">KungFuMD
+        <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:40px;">EZDoc
       </a>
       <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="#">
         <img src="//placehold.it/40?text=LOGO" alt="logo">
@@ -25,40 +25,22 @@
       <ul class="navbar-nav ml-auto flex-nowrap">
 
         <li class="nav-item">
-          <a href="#" class="nav-link m-2 menu-item nav-active">Schedule an Appointment
+          <a class="nav-link m-2 menu-item nav-active" data-toggle="modal" data-target="#login">Schedule an Appointment
             <i class="fa fa-calendar-alt"></i></a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link m-2 menu-item">Live Chat <i class="fa fa-phone"></i></a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link m-2 menu-item">Locations</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link m-2 menu-item">Our Team</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link m-2 menu-item">About Us</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link m-2 menu-item">Donate</a>
+          <a href="#" class="nav-link m-2 menu-item">Location
+            <i class="fa fa-compass"></i></a>
+          </a>
         </li>
       </ul>
-    </div>
-
-    <div class="input-group col-md-4" id="search">
-      <input class="form-control" id="search" type="search">
-      <span class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button">
-          <i class="fa fa-search"></i>
-        </button>
-      </span>
     </div>
 
   </nav>
 
   <div id="tint">
   </div>
+    
   <div class="container-fluid" id="background">
   </div>
   <div class="container-fluid" id="main_content">
@@ -85,11 +67,13 @@
               <button type="submit" class="btn btn-info">Login</button>
             </form>
           </div>
+          
 
         </div>
       </div>
 
     </div>
+   
 
     {% endblock %}
 

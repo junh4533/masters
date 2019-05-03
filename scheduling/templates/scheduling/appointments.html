@@ -47,7 +47,7 @@
 
         <div id="footer">
             <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:30px;">
-            <h6>KungFuMD</h6>
+            <h6>EzDoc</h6>
         </div>
 
     </div>
@@ -66,6 +66,7 @@
                         <th>Timeslot</th>
                         <th>Doctor</th>
                         <th>Patient</th>
+                        <th class="trash"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,6 +76,16 @@
                         <td>{{ all_appointment.get_timeslot_display }}</td>
                         <td>{{ all_appointment.doctor }}</td>
                         <td>{{ all_appointment.patient }}</td>
+                        <td class="trash">
+                            <form id="delete" action="{% url 'delete_appointment' %}" method="POST">
+                                {% csrf_token %}
+                                <a class="btn btn-danger" onclick="$('#delete').submit();"> 
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                                <input type="hidden" value="{{ all_appointment.id }}" name="appointment_id"> 
+                            </form>
+                            
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

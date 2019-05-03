@@ -39,11 +39,14 @@
 
     <div class="col-5">
         <br>
-        <form id="datepicker" method="get" name="select_date" style="overflow:hidden;">
-            <div id="datetimepicker12">
+        {% comment %} <form id="datepicker" method="get" name="select_date"> {% endcomment %}
+        <div id="datepicker"  name="select_date"> 
+        {% comment %} {% csrf_token %} {% endcomment %}
+            <div id="datetimepicker">
                 <input type="hidden" name="date" id="date">
             </div>
-        </form>
+        </div>
+        {% comment %} </form> {% endcomment %}
     </div>
 
     <div class="col-5">
@@ -56,8 +59,8 @@
             Patient
             {{ form.patient|add_class:'form-control' }}
             <br>
-            <input type="hidden" name="date" value="{{data_input}}">
-            Available Appointments for {{ data_input }}
+            <input id="submit_date" type="hidden" name="date" value="">
+            <p>Available Appointments for </p> <p id="available"></p>
             <select class="form-control" id="" name="timeslot">
                 {% for available_appointment in available_appointments %}
                 <option value="{{ available_appointment.0 }}">{{ available_appointment.1 }}</option>

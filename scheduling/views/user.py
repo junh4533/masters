@@ -40,9 +40,8 @@ def user_login(request):
                 elif user_type=="doctor":
                     login(request, user)
                     return redirect('doctor_portal')
-                else:
-                    login(request, user)
-                    return redirect('assistant_portal')
+                elif user_type=="assistant":
+                    return redirect('assistant_portal')    
     else:
         form = LoginForm()
         return render(request,'registration/login.html',{'form':form})
@@ -60,7 +59,15 @@ def index(request):
 
 def all_appointments(request):
     if request.user.user_type == "doctor":
-        all_appointments = Appointment.objects.filter(doctor = request.user.doctor.upin).order_by('date').order_by('timeslot')
+        all_appointments = Appointment.objects.filter(doctor = request.user.doctor.upin)
+    else:
+        all_appointments = Appointment.objects.all().order_by('date','timeslot')
+    return render(request, 'scheduling/appointments.html', {"all_appointments" : all_appointments})
+
+def delete_appointment(request):
+    Appointment.objects.filter(id=request.POST.get('appointment_id')).delete()
+    if request.user.user_type == "doctor":
+        all_appointments = Appointment.objects.filter(doctor = request.user.doctor.upin)
     else:
         all_appointments = Appointment.objects.all().order_by('date','timeslot')
     return render(request, 'scheduling/appointments.html', {"all_appointments" : all_appointments})

@@ -23,8 +23,8 @@ class Doctor(models.Model):
     upin = models.AutoField(primary_key=True) #unique physician identification number
     user = models.OneToOneField(User, on_delete=models.CASCADE) #user id
     user.user_type = "doctor"
-    specialty = models.CharField(max_length=20)
-    picture = models.ImageField(upload_to = 'doctors')
+    specialty = models.CharField(max_length=20, blank=False)
+    picture = models.ImageField(upload_to = 'doctors', blank=False)
 
     #return the doctors' name
     def __str__(self):
@@ -35,7 +35,7 @@ class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete = models.CASCADE, related_name='patient_doctor', null=True)
     user.user_type = "patient"
-    picture = models.ImageField(upload_to = 'patients')
+    picture = models.ImageField(upload_to = 'patients', blank=False)
 
     #return the patients' name
     def __str__(self):
@@ -58,15 +58,15 @@ def save_user_profile(sender, instance, **kwargs):
 
 class Appointment(models.Model):
     TIMESLOT_LIST = (
-        (1, '10:00 – 11:00'),
-        (2, '11:00 – 12:00'),
-        (3, '12:00 – 13:00'),
-        (4, '13:00 – 14:00'),
-        (5, '14:00 – 15:00'),
-        (6, '15:00 – 16:00'),
-        (7, '16:00 – 17:00'),
-        (8, '17:00 – 18:00'),
-        (8, '18:00 – 19:00'),
+        (1, '10:00 - 11:00'),
+        (2, '11:00 - 12:00'),
+        (3, '12:00 - 13:00'),
+        (4, '13:00 - 14:00'),
+        (5, '14:00 - 15:00'),
+        (6, '15:00 - 16:00'),
+        (7, '16:00 - 17:00'),
+        (8, '17:00 - 18:00'),
+        (8, '18:00 - 19:00'),
     )
 
     date = models.DateField(default=date.today)

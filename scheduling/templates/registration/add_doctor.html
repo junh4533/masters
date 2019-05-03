@@ -1,25 +1,62 @@
-{% extends 'scheduling/base.html' %}
-<!-- Links layout.html as a HTML template -->
+{% extends 'scheduling/dashboard_template.html' %}
+{% load staticfiles %}
+{% load static %}
 {% load crispy_forms_tags %}
+
 {% block content %}
-
 {% if user.is_authenticated and user.user_type == "assistant" %}
-<div class="row">
-      <div class="container col-2 col-lg-3"></div>
-
-      <div class="container col-8 col-lg-6 box">
-
-            <div class="tab-content jumbotron form_container">
-                  <h2>Add information for the doctor</h2>
-                  <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
-                        {{ form|crispy }}
-                        <button type="submit" class="btn btn-primary">Add</button>
-                  </form>
+<div class="row container-fluid">
+      <div class="col-2 sidebar">
+            <br>
+            <div id="profile">
+                  <i class="fas fa-user-shield" style="font-size:60px;"></i>
+                  <br><br>
+                  <h5>{{user}} </h5>
+                  <h6>{{user.user_type}}</h6>
             </div>
+
+            <a href="{% url 'assistant_portal' %}"><i class="fa fa-home"></i> Home</a>
+            <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule an Appointment</a>
+            <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add a User</a>
+            <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
+            <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
+
+            <div id="footer">
+                  <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:30px;">
+                  <h6>KungFuMD</h6>
+            </div>
+
       </div>
+      <div class="col-2"> </div>
+      <div class="col-6">
+            <br>
+            <div class="overflow-auto form_container">
+                  <h2>Add information for the doctor</h2>
+                  <hr>
+                  <form method="post" enctype="multipart/form-data">{% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-info">Register</button>
+                  </form>
 
-      <div class="container col-2 col-lg-3"></div>
+                  <button class="btn btn-dark">
+                        <a href="{% url 'assistant_portal' %}">Return</a>
+                  </button>
+            </div>
+
+            {% if success  %}
+            <div class="toast">
+                  <div class="toast-header">
+                        {{success}}
+                  </div>
+                  <div class="toast-body">
+                        {{form.patient.value}}
+                  </div>
+            </div>
+            {% endif %}
+      </div>
+      <div class="col-2"> </div>
 </div>
-
+{% else %}
+{% url index %}
 {% endif %}
 {% endblock %}
