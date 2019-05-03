@@ -44,6 +44,14 @@ a:hover {
     text-decoration: none;
 }
 
+.toast {
+    color: black;
+    background-color: rgba(57, 204, 204, .7);
+    position: absolute;
+    top: 0;
+    right: 20px;
+}
+
 /*************** icon css ******************/
 
 .icon {

@@ -6,6 +6,9 @@ from scheduling.views import *
 #load methods from views.py
 urlpatterns = [
     path('', user.index, name='index'),
+    path('home/', include(([
+        path('our_team/',user.our_team,name='our_team')
+    ]))),
     path('doctor/', include(([
         path('home/', doctor.doctor_portal,name='doctor_portal'),
         path('appointments/', user.all_appointments, name='all_appointments'),

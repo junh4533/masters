@@ -144,8 +144,6 @@ EMAIL_HOST_USER = 'EZDoctPortal@gmail.com'
 EMAIL_HOST_PASSWORD = 'EZDoctPortal123'
 EMAIL_USE_TLS = True
 
-
-
-
+DATE_FORMAT = "Y-m-d"
 
 

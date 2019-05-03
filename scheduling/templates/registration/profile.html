@@ -1,71 +1,70 @@
-{% comment %} {% extends 'scheduling/base.html' %} {% endcomment %}
+
 {% extends 'scheduling/dashboard_template.html' %}
+{% comment %} {% extends 'scheduling/base.html' %} {% endcomment %}
 {% load staticfiles %}
 {% load static %}
 {% load crispy_forms_tags %}
 
 {% block content %}
+
 {% if user.is_authenticated %}
-{% if user.user_type == "patient" %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="d-flex flex-grow-1">
-            <span class="w-100 d-lg-none d-block">
-                  <!-- hidden spacer to center brand on mobile --></span>
-            <a class="navbar-brand d-none d-lg-inline-block" href="{%url 'patient_portal'%}">
-                  <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:40px;">EzDoc
-            </a>
-            <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="{%url 'patient_portal'%}">
-                  <img src="//placehold.it/40?text=LOGO" alt="logo">
-            </a>
-            <div class="w-100 text-right">
-                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="navbar-toggler-icon"></span>
-                  </button>
-            </div>
-      </div>
-
-      <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
-            <ul class="navbar-nav ml-auto flex-nowrap">
-                  <li class="nav-item">
-                        <a href="/patient/profile" class="nav-link m-2 menu-item">
-                              Profile
-                              <span class="icon">
-                                    <i class="fas fa-user"></i>
-                              </span>
-                        </a>
-                  </li>
-                  <li class="nav-item">
-                        <a href="{%url 'logout'%}" class="nav-link m-2 menu-item">
-                              Logout
-                              <span>
-                                    <i class="fas fa-sign-out-alt"></i>
-                              </span>
-                        </a>
-                  </li>
-            </ul>
-      </div>
-
-      <div class="input-group col-md-4" id="search">
-            <input class="form-control" id="search" type="search">
-            <span class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="button">
-                        <i class="fa fa-search"></i>
-                  </button>
-            </span>
-      </div>
-
-</nav>
-
-{% endif %}
-
-{% if user.user_type == "patient" or user.user_type == "doctor" %}
-<br>
 <div class="row container-fluid">
-      <div class="container col-2 col-lg-3"></div>
 
-      <div class="container col-8 col-lg-6 box">
+      {% if user.user_type == "doctor" %}
 
-            <div class="jumbotron form_container">
+      <div class="col-2 sidebar">
+            <br>
+            <div id="profile">
+                  <img id="pfp" class="rounded-circle" src="{{user.doctor.picture.url}}">
+                  <br><br>
+                  <h5> Dr. {{user}} </h5>
+                  <h6>{{user.doctor.specialty}} </h6>
+                  <br>
+                  <h6>Appointments today: {{appointments_today}}</h6>
+            </div>
+
+            <a href="{% url 'doctor_portal' %}"><i class="fa fa-home"></i> Home</a>
+            <a href="../profile"><i class="fa fa-id-badge"></i> My Profile</a>
+            <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
+
+            <div id="footer">
+                  <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:30px;">
+                  <h6>EZDoc</h6>
+            </div>
+
+      </div>
+
+      {% elif user.user_type == "assistant" %}
+
+      <div class="col-2 sidebar">
+            <br>
+            <div id="profile">
+                  <i class="fas fa-user-shield" style="font-size:60px;"></i>
+                  <br><br>
+                  <h5>{{user}} </h5>
+                  <h6>{{user.user_type}}</h6>
+            </div>
+
+            <a href="{% url 'assistant_portal' %}"><i class="fa fa-home"></i> Home</a>
+            <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule an Appointment</a>
+            <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add a User</a>
+            <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
+            <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
+
+            <div id="footer">
+                  <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:30px;">
+                  <h6>EZDoc</h6>
+            </div>
+
+      </div>
+
+      {% endif %}
+
+      <div class="col-2"> </div>
+
+      <div class="col-6">
+            <br>
+            <div class="form_container">
                   <h2>{{heading}}</h2>
                   <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
                         {{ form|crispy }}
@@ -84,7 +83,8 @@
             </div>
       </div>
 
-      <div class="container col-2 col-lg-3"></div>
+      <div class="col-2"> </div>
+
 </div>
 
 {% else %}

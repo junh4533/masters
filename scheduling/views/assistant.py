@@ -125,28 +125,14 @@ def doctors(request):
     args = {"doctors" : doctors}
     return render(request, 'scheduling/view_doctors.html', args)
 
-
 def make_appointments(request):
-    # date_session = request.session['data_input']
     data_input = request.GET.get('date')
-    print(data_input)
-    if data_input == None:
-        data_input = date.today()
+    if not data_input:
+        data_input = date.today().strftime('%Y-%m-%d')
         print(data_input)
-
     selected_date = Appointment.objects.filter(date = data_input).values_list('timeslot', flat=True)
+    print(selected_date)
     available_appointments = [(value, time) for value, time in Appointment.TIMESLOT_LIST if value not in selected_date]
-    print(available_appointments)
-    # request.session['data_input'] = data_input
-    # date_session = data_input
-    # print("Input2: ", data_input)
-    form = AppointmentForm(request.POST)
-    args = {
-        "form" : form, 
-        "available_appointments" : available_appointments, 
-        "data_input": data_input, 
-        # "date_session": date_session,
-    }
 
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
@@ -155,16 +141,18 @@ def make_appointments(request):
             success = "Appointment created!"
             email = str(form.instance.patient.user.email)
             message = 'Appointment scheduled for ' + str(form.cleaned_data['date']) + " " + str(form.instance.get_timeslot_display())
-            send_mail('EzDoc Appointment', message, 'EZDoctPortal@gmail.com', [email])
+            send_mail('EZDoc Appointment', message, 'EZDoctPortal@gmail.com', [email])
             print(email)
             print(message)
             form = AppointmentForm
             return render(request, 'scheduling/make_appointments.html', {"success" : success,"form":form})
         else:
-            print("invalid form")
-            return render(request, 'scheduling/make_appointments.html', {"form":form})
-    # elif request.method == 'GET':
-        
-    print("dsas")
-    return render(request, 'scheduling/make_appointments.html', args)
-    # elif request.method == 'GET':
+            print("invalid")
+    else:
+        form = AppointmentForm
+        args = {
+            "form" : form, 
+            "available_appointments" : available_appointments, 
+            "data_input": data_input, 
+        }
+        return render(request, 'scheduling/make_appointments.html', args)

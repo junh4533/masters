@@ -41,7 +41,7 @@ def patient_portal(request):
         form = AppointmentForm(request.POST)
         if form.is_valid():
             form.save()
-            success = "Appointment Created!"
+            success = "Appointment Scheduled"
             args = {
                 "success":success,
                 "form" : form,
@@ -52,11 +52,14 @@ def patient_portal(request):
             }
             email = str(request.user.email)
             message = 'Appointment scheduled for ' + str(form.cleaned_data['date']) + " " + str(form.instance.get_timeslot_display())
-            send_mail('KungFuMD Appointment', message, 'EZDoctPortal@gmail.com', [email])
+            send_mail('EZDoc Appointment', message, 'EZDoctPortal@gmail.com', [email])
             print(email)
             print(message)
             return render(request, 'scheduling/patient.html', args)
     else:
+        if 'appointment_id' in request.GET:
+            Appointment.objects.filter(id=request.GET.get('appointment_id')).delete()
+            print("appointment deleted")
         form = AppointmentForm(request.POST)
         args = {
             "form" : form, 

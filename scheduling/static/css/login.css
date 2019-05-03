@@ -1,7 +1,9 @@
-body {
+body,
+html {
     width: 100%;
     height: 100%;
     background-color: #e6e6fa;
+    overflow: hidden;
 }
 
 .center {
@@ -50,6 +52,7 @@ a:hover {
     position: absolute;
     top: 30%;
     left: 5%;
+    display: inline-block;
 }
 
 nav {
@@ -70,53 +73,98 @@ nav {
     color: #7FDBFF;
 }
 
-#warning {
+#doctors>* {
+    display: inline;
+}
+
+/* #warning {
     /* z-index: 999999; */
-    margin: auto 1.5em;
+/* margin: auto 1.5em;
     width: 20%;
     position: absolute;
     top: 50px;
     
+} */
+
+.toast {
+    color: black;
+    background-color: rgba(57, 204, 204, .7);
+    position: absolute;
+    top: 9vh;
+    right: 20px;
 }
 
-/*************** jumbotron forms css ******************/
-
-.form_container>* {
+/*************** form css ******************/
+.form_container>form,
+button {
     display: inline;
 }
 
+/* 
 .form_container {
     padding: 32px 32px 32px 32px;
-    background: rgba(0, 31, 63, 0.7);
-    color: #DDDDDD;
 }
 
 .text-muted {
     color: #AAAAAA !important;
 }
 
-/*************** css for the calendar ******************/
-.bootstrap-datetimepicker-widget table td.active{
-    background-color:#e6e6fa;
-    color:black;
+.overflow-auto {
+    height: 80vh;
 }
 
-.bootstrap-datetimepicker-widget table td.active:hover, 
-.bootstrap-datetimepicker-widget table td.day:hover{
-    background-color:#17a2b8;
+.overflow-auto::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+    background-color: #aaa;
+    /* or add it to the track 
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: rgb(9, 32, 46);
+}
+
+.form-control {
+    width: 90%;
+} */
+
+/*************** css for the calendar ******************/
+#datepicker,
+#datetimepicker {
+    width: 35vw;
+
+}
+
+.bootstrap-datetimepicker-widget table td.active {
+    background-color: #e6e6fa;
+    color: black;
+}
+
+.bootstrap-datetimepicker-widget table td.active:hover,
+.bootstrap-datetimepicker-widget table td.day:hover {
+    background-color: #17a2b8;
     color: white;
 }
 
-.bootstrap-datetimepicker-widget table td.active.today:before{
+.bootstrap-datetimepicker-widget table td.active.today:before {
     border-bottom-color: #17a2b8;
 }
 
 .bootstrap-datetimepicker-widget table td.day {
-    line-height: 50px;
+    line-height: 40px;
 }
 
 .datepicker table tr td,
 .datepicker table tr th {
     width: 30px;
     height: 30px;
+}
+
+.card-img-top {
+    width: 250px;
+    height: 200px;
+}
+
+#doctors > *{
+    display: inline-block;
 }

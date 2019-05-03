@@ -34,7 +34,7 @@
       <span class="w-100 d-lg-none d-block">
         <!-- hidden spacer to center brand on mobile --></span>
       <a class="navbar-brand d-none d-lg-inline-block" href="">
-        <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:40px;">KungFuMD
+        <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:40px;">EzDoc
       </a>
       <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="">
         <img src="//placehold.it/40?text=LOGO" alt="logo">
@@ -48,14 +48,6 @@
 
     <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar">
       <ul class="navbar-nav ml-auto flex-nowrap">
-        <li class="nav-item">
-          <a href="#" class="nav-link m-2 menu-item nav-active">
-            Health Report
-            <span class="icon">
-              <i class="fas fa-heartbeat"></i>
-            </span>
-          </a>
-        </li>
         <li class="nav-item">
           <a href="/patient/profile" class="nav-link m-2 menu-item">
             Profile
@@ -75,26 +67,14 @@
       </ul>
     </div>
 
-    <div class="input-group col-md-4" id="search">
-      <input class="form-control" id="search" type="search">
-      <span class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button">
-          <i class="fa fa-search"></i>
-        </button>
-      </span>
-    </div>
-
   </nav>
-
+  <br>
   <div class="row container-fluid">
-
-    <div class="col-6" id="upcoming">
+    <div class="col-6 overflow-auto" id="upcoming">
       <h2>Upcoming Appointments</h2>
       <hr>
       {% for appointment in appointments %}
       <div class="media p-3">
-        {% comment %} <img src="{{ doctor_pic.picture.url }}" class="align-self-start mr-3"
-          style="width:80px; height:80px;"> {% endcomment %}
         <img src="{{ user.patient.doctor.picture.url }}" class="align-self-start mr-3" style="width:80px; height:80px;">
         <div class="vl"></div>
         &nbsp;
@@ -102,20 +82,30 @@
           <h4>Dr. {{ appointment.doctor }} <small><i>{{ appointment.date }}</i></small></h4>
           <h5>{{ appointment.get_timeslot_display }}</h5>
         </div>
+
+        <form id="delete" action="{% url 'patient_portal' %}" method="GET">
+          {% csrf_token %}
+          <a class="btn btn-danger" onclick="$('#delete').submit();"> 
+              <i class="fa fa-trash"></i>
+          </a>
+          <input type="hidden" value="{{ appointment.id }}" name="appointment_id"> 
+        </form>
       </div>
-      <br>
+      <hr style="width: 700px;">
       {% endfor %}
     </div>
-
+   
     <div class="col-6" id="appointments">
       <h2>Schedule an appointment</h2>
       <hr>
-      <form id="datepicker" method="get" name="select_date" style="overflow:hidden;">
-        <div id="datetimepicker12">
+      {% comment %} <hr> {% endcomment %}
+      <form id="datepicker" method="get" name="select_date">
+        {% comment %} {% csrf_token %} {% endcomment %}
+        <div id="datetimepicker">
           <input type="hidden" name="date" id="date">
         </div>
       </form>
-
+          <hr>
       <h3>Available timeslots:</h3>
       <form method="post" enctype="multipart/form-data" id="appointment_form">
         {% csrf_token %}
@@ -133,21 +123,22 @@
         <button type="submit" class="btn btn-info">Submit</button>
       </form>
 
-      {% if success  %}
-      <div class="toast">
-        <div class="toast-header">
-          Appointment Created.
-        </div>
-        <div class="toast-body">
-          {{form.patient.value}}
-        </div>
-      </div>
-      {% endif %}
-
     </div>
 
   </div>
 
+ {% if success %}
+  <div class="toast">
+    <div class="toast-header">
+      {{success}} &nbsp;
+      <small class="text-muted">{{data_input}}</small>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+    </div>
+    <div class="toast-body">
+    Dr. {{doctor}} - {{doctor.specialty}}
+    </div>
+  </div>
+  {% endif %}
 
   {% else %}
   {% url index %}

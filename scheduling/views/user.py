@@ -66,10 +66,7 @@ def all_appointments(request):
 
 def delete_appointment(request):
     Appointment.objects.filter(id=request.POST.get('appointment_id')).delete()
-    if request.user.user_type == "doctor":
-        all_appointments = Appointment.objects.filter(doctor = request.user.doctor.upin)
-    else:
-        all_appointments = Appointment.objects.all().order_by('date','timeslot')
+    all_appointments = Appointment.objects.all().order_by('date','timeslot')
     return render(request, 'scheduling/appointments.html', {"all_appointments" : all_appointments})
 
 def patients(request):
@@ -103,11 +100,17 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             args = {'form':form,'heading':heading,'success':success}
-            return render(request, 'registration/profile.html', args)
+            if request.user == "patient":
+                return render(request, 'registration/patient_profile.html', args)
+            else:
+                return render(request, 'registration/profile.html', args)
     else:
         form = EditProfile(instance=request.user)
         args = {'form':form,'heading':heading}
-        return render(request, 'registration/profile.html', args)
+        if request.user.user_type == "patient":
+            return render(request, 'registration/patient_profile.html', args)
+        else:
+            return render(request, 'registration/profile.html', args)
 
 def change_password(request):
     heading = "Change Your Password"
@@ -119,14 +122,28 @@ def change_password(request):
             form.save()
             update_session_auth_hash(request, form.user)
             args = {'form':form, 'heading':heading,'success':success}
-            return render(request, 'registration/profile.html', args)
+            if request.user.user_type == "patient":
+                return render(request, 'registration/patient_profile.html', args)
+            else:
+                return render(request, 'registration/profile.html', args)
         else:
             args = {'form':form, 'heading':heading}
-            return render(request, 'registration/profile.html', args)
+            if request.user.user_type == "patient":
+                return render(request, 'registration/patient_profile.html', args)
+            else:
+                return render(request, 'registration/profile.html', args)
     else:
         form = PasswordChangeForm(user=request.user)
         args = {'form':form, 'heading':heading}
-        return render(request, 'registration/profile.html', args)
+        if request.user.user_type == "patient":
+                return render(request, 'registration/patient_profile.html', args)
+        else:
+            return render(request, 'registration/profile.html', args)
 
+def our_team(request):
+    doctors = Doctor.objects.all()
+    print(doctors)
+    args = {"doctors" : doctors}
+    return render(request, 'scheduling/our_team.html', args)
 
 
