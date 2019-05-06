@@ -17,8 +17,8 @@
         </div>
 
         <a href="{% url 'assistant_portal' %}"><i class="fa fa-home"></i> Home</a>
-        <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule an Appointment</a>
-        <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add a User</a>
+        <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule Appointment</a>
+        <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add User</a>
         <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
         <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
 
@@ -36,7 +36,7 @@
         <div class="row" id="preview_row">
 
             <div class="col-sm-6" id="appointments">
-                <h3>Upcoming Appointments</h3>
+                <h3>Today's Appointments</h3>
 
                 <div class="container-fluid">
                     <table class="table table-dark table-striped">
@@ -69,12 +69,16 @@
                         chart: {
                             type: 'column'
                         },
+
                         title: {
-                            text: 'Appointments'
+                            text: 'Appointments As Of Now'
                         },
+
                         xAxis: {
-                            categories: [{{categories|safe}}],
+                            title:{text:'Doctors by Lastname'},
+                            categories: {{categories|safe}},
                         },
+
                         yAxis: {
                             title: {
                                 text: 'Number of appointment'

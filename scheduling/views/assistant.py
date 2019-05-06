@@ -29,9 +29,10 @@ from django.core.mail import send_mail
 
 #################### assistants' views ####################
 def assistant_portal(request):
-    appointments = Appointment.objects.all().order_by('date','timeslot').filter(date__gte=datetime.now())[:5]
+    appointments = Appointment.objects.all().order_by('date','timeslot').filter(date=date.today())[:5]
         #generate chart
     dataset = Appointment.objects\
+        .filter(date__gte=datetime.now())\
         .values('doctor',
         'doctor__user__first_name',
         'doctor__user__last_name',
@@ -43,12 +44,12 @@ def assistant_portal(request):
     appointment_count = list()
 
     for entry in dataset:
-        categories.append('Dr.')
-        categories.append(entry['doctor__user__first_name'])
+        # categories.append('Dr.')
+        # categories.append(entry['doctor__user__first_name'])
         categories.append(entry['doctor__user__last_name'])
-        categories = ' '.join(categories)
+        # test = " ".join(categories)
         appointment_count.append(entry['appointment_count'])
-    print(json.dumps(categories))
+        
     return render(request, 'scheduling/assistant.html', 
     {"appointments" : appointments,
     "categories":json.dumps(categories),
@@ -75,7 +76,7 @@ def add_user(request):
         else:
             return render(request, 'registration/add_user.html', {'form':form})
     else:
-        heading = "Add a User"
+        heading = "Add User"
         form = CustomCreationForm
         args = {'form':form,'heading':heading}
         return render(request, 'registration/add_user.html', args)
@@ -91,7 +92,8 @@ def add_doctor_info(request):
         if form.is_valid():
             form.save()
             success = "Doctor successfully added"
-            return render(request, 'scheduling/assistant.html', {'success':success})
+            # return render(request, 'scheduling/assistant.html', {'success':success})
+            return redirect('assistant_portal')
         else:
             return render(request, 'registration/add_user.html', {'form':form})
     else:
@@ -111,7 +113,8 @@ def add_patient_info(request):
         if form.is_valid():
             form.save()
             success = "Patient successfully added"
-            return render(request, 'scheduling/assistant.html', {'success':success})
+            # return render(request, 'scheduling/assistant.html', {'success':success})
+            return redirect('assistant_portal')
         else:
             return render(request, 'registration/add_user.html', {'form':form})
     else:

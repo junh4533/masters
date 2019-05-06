@@ -48,7 +48,6 @@ function exportTableToCSV(filename) {
       <h6>{{user.doctor.specialty}} </h6>
     </div>
 
-    <h6>Appointments scheduled for today: </h6>
     <a href="{% url 'doctor_portal' %}"><i class="fa fa-home"></i> Home</a>
     <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
     <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
@@ -60,7 +59,7 @@ function exportTableToCSV(filename) {
 
   </div>
     <div class="col-sm-4" id="appointment">
-      <h1>Appointment Search</h1>
+      <h2>Appointment Search</h2>
       <form method="get" action="">
         <div class="form-group">
           {{filter.form|crispy}}
@@ -108,8 +107,8 @@ function exportTableToCSV(filename) {
     </div>
 
     <a href="{% url 'assistant_portal' %}"><i class="fa fa-home"></i> Home</a>
-    <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule an Appointment</a>
-    <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add a User</a>
+    <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule Appointment</a>
+    <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add User</a>
     <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
     <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
 
@@ -120,7 +119,7 @@ function exportTableToCSV(filename) {
     
   </div>
   <div class="col-sm-4" id="appointment">
-      <h1>Appointment Search</h1>
+      <h2>Appointment Search</h2>
       <form method="get" action="">
         <div class="form-group">
           {{filter.form|crispy}}

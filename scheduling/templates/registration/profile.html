@@ -19,8 +19,6 @@
                   <br><br>
                   <h5> Dr. {{user}} </h5>
                   <h6>{{user.doctor.specialty}} </h6>
-                  <br>
-                  <h6>Appointments today: {{appointments_today}}</h6>
             </div>
 
             <a href="{% url 'doctor_portal' %}"><i class="fa fa-home"></i> Home</a>
@@ -46,8 +44,8 @@
             </div>
 
             <a href="{% url 'assistant_portal' %}"><i class="fa fa-home"></i> Home</a>
-            <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule an Appointment</a>
-            <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add a User</a>
+            <a href="{% url 'make_appointments' %}"><i class="fa fa-calendar-plus"></i> Schedule Appointment</a>
+            <a href="{% url 'add_user' %}"><i class="fa fa-user-plus"></i> Add User</a>
             <a href="{% url 'edit_profile' %}"><i class="fa fa-id-badge"></i> My Profile</a>
             <a href="{%url 'logout' %}"> <i class="fas fa-sign-out-alt"></i> Logout </a>
 

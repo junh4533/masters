@@ -28,7 +28,7 @@ from django.core.mail import send_mail
 
 #################### doctors' views ####################
 def doctor_portal(request):
-    appointments = Appointment.objects.filter(doctor=request.user.doctor.upin).order_by('date','timeslot')[:4]
+    appointments = Appointment.objects.filter(doctor=request.user.doctor.upin).filter(date=date.today()).order_by('date','timeslot')[:4]
     appointments_today = Appointment.objects.filter(doctor=request.user.doctor.upin).filter(date=date.today()).count()
     # print()
     print(appointments_today)
