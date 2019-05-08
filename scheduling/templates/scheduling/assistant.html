@@ -71,22 +71,36 @@
                         },
 
                         title: {
-                            text: 'Appointments As Of Now'
+                            text: 'Scheduled Appointments'
                         },
 
                         xAxis: {
-                            title:{text:'Doctors by Lastname'},
-                            categories: {{categories|safe}},
+                            title:{text:'Doctors'},
+                            categories: [
+                                {% for entry in dataset%}
+                                    'Dr. {{entry.doctor__user__first_name}} {{entry.doctor__user__last_name}}'
+                                    {%if not forloop.last%}
+                                        ,
+                                    {% endif %}
+                                {%endfor%}       
+                            ]
                         },
 
                         yAxis: {
                             title: {
-                                text: 'Number of appointment'
+                                text: 'Number of Appointments'
                             }
                         },
                         series: [{
                             name: 'Appointments',
-                            data: {{appointment_count}}
+                            data: [
+                                 {% for entry in dataset%}
+                                    {{entry.appointment_count}}
+                                    {%if not forloop.last%}
+                                        ,
+                                    {% endif %}
+                                {%endfor%}   
+                            ]
                         }],
                     });
                 </script>

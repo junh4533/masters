@@ -68,4 +68,9 @@ def patient_portal(request):
             "data_input": data_input, 
             "doctor": doctor, 
         }
+        email = str(request.user.email)
+        message = 'Your appointment has been cancelled.'
+        send_mail('EZDoc Appointment', message, 'EZDoctPortal@gmail.com', [email])
+        print(email)
+        print(message)
         return render(request, 'scheduling/patient.html', args)

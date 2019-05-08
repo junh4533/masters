@@ -39,21 +39,23 @@ def assistant_portal(request):
         )\
         .annotate(appointment_count=Count('date'))\
         .order_by('doctor')
-    
+    print(dataset)
     categories = list()
     appointment_count = list()
 
-    for entry in dataset:
-        # categories.append('Dr.')
-        # categories.append(entry['doctor__user__first_name'])
-        categories.append(entry['doctor__user__last_name'])
-        # test = " ".join(categories)
-        appointment_count.append(entry['appointment_count'])
+    # for entry in dataset:
+    #     categories.append('Dr.')
+    #     categories.append(entry['doctor__user__first_name'])
+    #     categories.append(entry['doctor__user__last_name'])
+    #     # categories = " ".join(categories)
+    #     appointment_count.append(entry['appointment_count'])
+    #     print(json.dumps(categories))
         
     return render(request, 'scheduling/assistant.html', 
     {"appointments" : appointments,
-    "categories":json.dumps(categories),
+    # "categories":json.dumps(categories),
     "appointment_count":json.dumps(appointment_count),
+    "dataset": dataset,
     })
 
 def add_user(request):

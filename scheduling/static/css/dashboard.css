@@ -52,6 +52,10 @@ a:hover {
     right: 20px;
 }
 
+.highchart-axis-title{
+    font-size: 40px;
+}
+
 /*************** icon css ******************/
 
 .icon {
