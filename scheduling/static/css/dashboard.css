@@ -56,6 +56,14 @@ a:hover {
     font-size: 40px;
 }
 
+nav {
+    height: 8vh;
+}
+
+.trash{
+    width: 80px!important;
+}
+
 /*************** icon css ******************/
 
 .icon {
@@ -101,7 +109,6 @@ a:hover {
 }
 
 /*************** sidebar css ******************/
-
 .sidebar {
     height: 100vh;
     z-index: 1;
@@ -137,7 +144,7 @@ a:hover {
 #footer {
     position: absolute;
     width: 100%;
-    bottom: 0;
+    bottom: 1%;
     color: white;
     text-align: center;
 }
@@ -146,13 +153,16 @@ a:hover {
     display: inline;
 }
 
+.tab-pane{
+    margin-left:0;
+}
 /*************** form css ******************/
-.form_container> form,button {
+.form_container > form,button {
     display: inline;
 }
 
 .form_container {
-    padding: 32px 32px 32px 32px;
+    padding: 25px 25px 25px 25px;
 }
 
 .text-muted {
@@ -160,7 +170,7 @@ a:hover {
 }
 
 .overflow-auto {
-    height: 90vh;
+    height: 80vh;
 }
 
 .overflow-auto::-webkit-scrollbar {
@@ -174,44 +184,10 @@ a:hover {
     background: rgb(9, 32, 46);
 }
 
-.form-control {
-    width: 90%;
-}
-
-/*************** scrollbar for the appointments table ******************/
-.fixed_header {
-    width: 800px;
-    table-layout: fixed;
-    border-collapse: collapse;
-}
-
-.fixed_header tbody {
-    display: block;
-    width: 100%;
-    overflow: auto;
-    height: 80vh;
-}
-
-.fixed_header thead tr {
-    display: block;
-}
-
-.fixed_header thead {
-    background: black;
-    color: #fff;
-}
-
-.fixed_header th,
-.fixed_header td {
-    padding: 5px;
-    text-align: left;
-    width: 200px;
-    height: 50px;
-}
-
-.trash{
-    width: 80px!important;
-}
+/* .form-control {
+    width: 30%;
+    display: inline;
+} */
 
 /*************** css for the calendar ******************/
 .bootstrap-datetimepicker-widget table td.active {

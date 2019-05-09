@@ -54,12 +54,13 @@ function exportTableToCSV(filename) {
 
       <div id="footer">
         <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:30px;">
-        <h6>EZDoc</h6>
+        <h6>EZDoct</h6>
       </div>
-
   </div>
+
     <div class="col-sm-4" id="appointment">
-      <h2>Appointment Search</h2>
+      <br>
+      <h2>Appointment Search</h2><hr>
       <form method="get" action="">
         <div class="form-group">
           {{filter.form|crispy}}
@@ -69,9 +70,10 @@ function exportTableToCSV(filename) {
       </form>
     </div>
 
-    <div class="col-sm-6 overflow-auto" id="appointments" >
-      <h2>Search Result</h2>
-      <div class="container-fluid">
+    <div class="col-sm-6" id="appointments">
+    <br>
+      <h2>Search Result</h2><hr>
+      <div class="container-fluid overflow-auto">
         <table class="table table-dark table-striped">
           <thead>
             <tr>
@@ -114,12 +116,14 @@ function exportTableToCSV(filename) {
 
     <div id="footer">
       <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:30px;">
-      <h6>EZDoc</h6>
+      <h6>EZDoct</h6>
     </div>
     
   </div>
   <div class="col-sm-4" id="appointment">
+  <br>
       <h2>Appointment Search</h2>
+      <hr>
       <form method="get" action="">
         <div class="form-group">
           {{filter.form|crispy}}
@@ -130,9 +134,11 @@ function exportTableToCSV(filename) {
       </form>
     </div>
 
-    <div class="col-sm-6 overflow-auto" id="appointments">
+    <div class="col-sm-6" id="appointments">
+    <br>
       <h2>Search Result</h2>
-      <div class="container-fluid">
+      <hr>
+      <div class="container-fluid overflow-auto">
         <table class="table table-dark table-striped">
           <thead>
             <tr>

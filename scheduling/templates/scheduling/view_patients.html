@@ -22,7 +22,7 @@
 
         <div id="footer">
             <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:30px;">
-            <h6>EZDoc</h6>
+            <h6>EZDoct</h6>
         </div>
 
     </div>
@@ -46,7 +46,7 @@
 
         <div id="footer">
             <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:30px;">
-            <h6>EZDoc</h6>
+            <h6>EZDoct</h6>
         </div>
 
     </div>
@@ -65,6 +65,11 @@
                 <div class="card-body center">
                     <h4 class="card-title">{{ patient.user }}</h4>
                     <p class="card-text">PID: {{ patient.pid }}</p>
+                        <form method="post">
+                            <button type="submit" value="{{patient.user}}"> 
+                            Edit Profile
+                            </button>
+                        </form>       
                 </div>
             </div>
             &nbsp;

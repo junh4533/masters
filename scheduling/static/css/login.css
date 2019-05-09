@@ -59,9 +59,6 @@ nav {
     height: 8vh;
 }
 
-#search {
-    width: 10vw;
-}
 
 #cancer {
     color: white;
@@ -90,19 +87,21 @@ nav {
     color: black;
     background-color: rgba(57, 204, 204, .7);
     position: absolute;
-    top: 9vh;
+    top: 8vh;
     right: 20px;
 }
 
 /*************** form css ******************/
-.form_container>form,
-button {
+.form_container > form,button {
     display: inline;
 }
 
-/* 
 .form_container {
-    padding: 32px 32px 32px 32px;
+    padding: 25px 25px 25px 25px;
+}
+
+#appointment_form{
+    text-align:center;
 }
 
 .text-muted {
@@ -117,21 +116,23 @@ button {
     width: 5px;
     height: 8px;
     background-color: #aaa;
-    /* or add it to the track 
+    
 }
 
 .overflow-auto::-webkit-scrollbar-thumb {
     background: rgb(9, 32, 46);
 }
-
+/* .form_container {
+    padding: 32px 32px 32px 32px;
+} */
+/*
 .form-control {
     width: 90%;
 } */
 
 /*************** css for the calendar ******************/
-#datepicker,
-#datetimepicker {
-    width: 35vw;
+#datepicker{
+     margin:auto;
 
 }
 

@@ -11,7 +11,7 @@
             <span class="w-100 d-lg-none d-block">
                   <!-- hidden spacer to center brand on mobile --></span>
             <a class="navbar-brand d-none d-lg-inline-block" href="{%url 'patient_portal'%}">
-                  <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:40px;">EzDoc
+                  <img src="{% static 'images/caduceus.png' %}" alt="Logo" style="width:40px;">EZDoct
             </a>
             <a class="navbar-brand-two mx-auto d-lg-none d-inline-block" href="{%url 'patient_portal'%}">
                   <img src="//placehold.it/40?text=LOGO" alt="logo">
@@ -46,7 +46,6 @@
 
 </nav>
 
-<br>
 <div class="row container-fluid">
       <div class="col-3"></div>
 
@@ -54,6 +53,7 @@
 
             <div class="form_container">
                   <h2>{{heading}}</h2>
+                  <hr>
                   <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
                         {{ form|crispy }}
                         <button type="submit" class="btn btn-info">Edit</button>
@@ -62,16 +62,23 @@
                         <a href="../home/">Return</a>
                   </button>
                   <br><br>
-                  {% if success  %}
-                  <div class="alert alert-success alert-dismissible fade show">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong>Success!</strong> {{success}}
-                  </div>
-                  {% endif %}
             </div>
       </div>
 
-      <div class="col-3"></div>
+      <div class="col-3">
+            {% if success  %}
+            <div class="toast">
+                  <div class="toast-header">
+                        Success! &nbsp;
+                        <small class="text-muted">{{data_input}}</small>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+                  </div>
+                  <div class="toast-body">
+                        {{success}}
+                  </div>
+            </div>
+            {% endif %}
+      </div>
 </div>
 
 {% else %}

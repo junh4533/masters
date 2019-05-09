@@ -70,14 +70,20 @@ def delete_appointment(request):
     return render(request, 'scheduling/appointments.html', {"all_appointments" : all_appointments})
 
 def patients(request):
-    if request.user.user_type == "doctor":
-        patients = Patient.objects.filter(doctor = request.user.doctor)
-        # user = request.user
+    if request.method == 'POST':
+        form = EditProfile(instance=request.POST.get('patient'))
+        heading = "Edit Your Profile"
+        args = {'form':form,'heading':heading}
+        if request.user.user_type == "patient":
+            return render(request, 'registration/patient_profile.html', args)
+        else:
+            return render(request, 'registration/profile.html', args)
     else:
-        patients = Patient.objects.all()
-        # user = request.user
-    
-    args = {"patients" : patients}
+        if request.user.user_type == "doctor":
+            patients = Patient.objects.filter(doctor = request.user.doctor)
+        else:
+            patients = Patient.objects.all()
+        args = {"patients" : patients}
     return render(request, 'scheduling/view_patients.html', args)
 
 def reports(request):
@@ -100,7 +106,8 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             args = {'form':form,'heading':heading,'success':success}
-            if request.user == "patient":
+            if request.user.user_type == "patient":
+                print("patient profile")
                 return render(request, 'registration/patient_profile.html', args)
             else:
                 return render(request, 'registration/profile.html', args)

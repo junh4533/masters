@@ -3,29 +3,29 @@ from scheduling.models import *
 from django.contrib.auth.models import User
 
 # forms
-# from forms import *
 from scheduling.forms import *
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 
+#URL
 from django.urls import reverse_lazy
 from django.views import generic
-
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.template.response import TemplateResponse
 
-#for chart
+#Chart
 from django.db.models import Count
-from datetime import datetime, timedelta
 import json
 
-#for reports
+#Reports
 from scheduling.filter import UserFilter
-from datetime import datetime
 
+#etc
+from django.utils.dateparse import parse_date
 from django.core.mail import send_mail
+from datetime import datetime, timedelta
 
 #################### assistants' views ####################
 def assistant_portal(request):
@@ -133,10 +133,12 @@ def doctors(request):
 def make_appointments(request):
     data_input = request.GET.get('date')
     if not data_input:
-        data_input = date.today().strftime('%Y-%m-%d')
-        print(data_input)
+        data_input = str(date.today())
+        date_object = date.today()
+        print(data_input, date_object)
+    else:
+        date_object = parse_date(data_input)
     selected_date = Appointment.objects.filter(date = data_input).values_list('timeslot', flat=True)
-    print(selected_date)
     available_appointments = [(value, time) for value, time in Appointment.TIMESLOT_LIST if value not in selected_date]
 
     if request.method == 'POST':
@@ -146,7 +148,7 @@ def make_appointments(request):
             success = "Appointment created!"
             email = str(form.instance.patient.user.email)
             message = 'Appointment scheduled for ' + str(form.cleaned_data['date']) + " " + str(form.instance.get_timeslot_display())
-            send_mail('EZDoc Appointment', message, 'EZDoctPortal@gmail.com', [email])
+            send_mail('EZDoct Appointment', message, 'EZDoctPortal@gmail.com', [email])
             print(email)
             print(message)
             form = AppointmentForm
@@ -158,6 +160,7 @@ def make_appointments(request):
         args = {
             "form" : form, 
             "available_appointments" : available_appointments, 
-            "data_input": data_input, 
+            "data_input": data_input,
+            "date_object": date_object,
         }
         return render(request, 'scheduling/make_appointments.html', args)
