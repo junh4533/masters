@@ -162,7 +162,7 @@ def make_appointments(request):
     # print(available_doctor)
     # available_appointments = [((value, time) for value, time in Appointment.TIMESLOT_LIST if value not in selected_date and if doctor not in available_doctor)]
     available_appointments = [(value, time) for value, time in Appointment.TIMESLOT_LIST if value not in selected_date]
-
+    print(available_appointments)
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():

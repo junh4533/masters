@@ -66,7 +66,7 @@ class Appointment(models.Model):
         (6, '15:00 - 16:00'),
         (7, '16:00 - 17:00'),
         (8, '17:00 - 18:00'),
-        (8, '18:00 - 19:00'),
+        (9, '18:00 - 19:00'),
     )
 
     date = models.DateField(default=date.today)
