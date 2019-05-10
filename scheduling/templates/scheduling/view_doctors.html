@@ -40,6 +40,11 @@
                 <div class="card-body center">
                     <h4 class="card-title">{{ doctor.user }}</h4>
                     <p class="card-text">{{ doctor.specialty }}</p>
+                        <form method="get">
+                            <button class="btn btn-outline-info" type="submit" value="{{doctor.user.username}}" name="edit_profile"> 
+                            Edit Profile
+                            </button>
+                        </form>    
                 </div>
             </div>
             &nbsp;

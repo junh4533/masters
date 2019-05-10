@@ -2,12 +2,14 @@
 from django.conf.urls import url, include
 from django.urls import path
 from scheduling.views import *
+from django.contrib import admin
 
 #load methods from views.py
 urlpatterns = [
     path('', user.index, name='index'),
     path('home/', include(([
-        path('our_team/',user.our_team,name='our_team')
+        path('our_team/',user.our_team,name='our_team'),
+        path('admin/', admin.site.urls), #admin portal
     ]))),
     path('doctor/', include(([
         path('home/', doctor.doctor_portal,name='doctor_portal'),
@@ -27,7 +29,7 @@ urlpatterns = [
         path('home/', assistant.assistant_portal, name='assistant_portal'),
         path('appointments/', user.all_appointments, name='all_appointments'),
         path('make_appointments/', assistant.make_appointments, name='make_appointments'),
-        path('delete_appointment/', user.delete_appointment, name='delete_appointment'),
+        # path('delete_appointment/', user.delete_appointment, name='delete_appointment'),
         path('patients/', user.patients, name='patients'),
         path('doctors/', assistant.doctors, name='all_doctors'),
         path('reports/', user.reports, name='reports'),

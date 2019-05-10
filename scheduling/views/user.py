@@ -41,7 +41,9 @@ def user_login(request):
                     login(request, user)
                     return redirect('doctor_portal')
                 elif user_type=="assistant":
-                    return redirect('assistant_portal')    
+                    return redirect('assistant_portal')   
+                else:
+                    return redirect('home/admin') 
     else:
         form = LoginForm()
         return render(request,'registration/login.html',{'form':form})
@@ -52,39 +54,52 @@ def index(request):
             return redirect('doctor_portal')
         elif request.user.user_type=="patient":
             return redirect('patient_portal')
-        else:
+        elif request.user.user_type=="assistant":
             return redirect('assistant_portal')
+        else:
+            return redirect('home/admin') 
     else:
         return redirect('home/login')
 
 def all_appointments(request):
-    if request.user.user_type == "doctor":
-        all_appointments = Appointment.objects.filter(doctor = request.user.doctor.upin)
-    else:
+    if request.method == 'GET':
+        if request.user.user_type == "doctor":
+            all_appointments = Appointment.objects.filter(doctor = request.user.doctor.upin)
+        else:
+            all_appointments = Appointment.objects.all().order_by('date','timeslot')
+        return render(request, 'scheduling/appointments.html', {"all_appointments" : all_appointments})
+    elif request.method == 'POST':
+        Appointment.objects.filter(id=request.POST.get('appointment_id')).delete()
         all_appointments = Appointment.objects.all().order_by('date','timeslot')
-    return render(request, 'scheduling/appointments.html', {"all_appointments" : all_appointments})
+        return render(request, 'scheduling/appointments.html', {"all_appointments" : all_appointments})
 
-def delete_appointment(request):
-    Appointment.objects.filter(id=request.POST.get('appointment_id')).delete()
-    all_appointments = Appointment.objects.all().order_by('date','timeslot')
-    return render(request, 'scheduling/appointments.html', {"all_appointments" : all_appointments})
+# def delete_appointment(request):
+    
 
 def patients(request):
+    heading = "Edit Profile"
+    success = "Profile successfully updated."
     if request.method == 'POST':
-        form = EditProfile(instance=request.POST.get('patient'))
-        heading = "Edit Your Profile"
+        edit_user = User.objects.get(username = request.session['edit_user_session'])
+        form = EditProfile(request.POST, instance=edit_user)
+        if form.is_valid():
+            request.session['edit_user_session'] = form.cleaned_data['username']
+            form.save()
+            args = {'form':form,'heading':heading,'success':success}
+            return render(request, 'registration/profile.html', args)  
+    elif 'edit_profile' in request.GET:
+        edit_user = User.objects.get(username = request.GET.get('edit_profile'))
+        request.session['edit_user_session'] = request.GET.get('edit_profile')
+        form = EditProfile(instance=edit_user)
         args = {'form':form,'heading':heading}
-        if request.user.user_type == "patient":
-            return render(request, 'registration/patient_profile.html', args)
-        else:
-            return render(request, 'registration/profile.html', args)
+        return render(request, 'registration/profile.html', args) 
     else:
         if request.user.user_type == "doctor":
             patients = Patient.objects.filter(doctor = request.user.doctor)
         else:
             patients = Patient.objects.all()
         args = {"patients" : patients}
-    return render(request, 'scheduling/view_patients.html', args)
+        return render(request, 'scheduling/view_patients.html', args)
 
 def reports(request):
     appointments = Appointment.objects.all().order_by('date').order_by('timeslot')
@@ -102,6 +117,15 @@ def edit_profile(request):
     success = "Profile successfully updated."
     
     if request.method == 'POST':
+        # if ('edit_user_session' in request.session) and (request.user.username != request.session['edit_user_session']):
+        #     print("1")
+        #     # print(request.user.username)
+        #     # print(request.session['edit_user_session'])
+        #     form = EditProfile(request.POST, instance=request.session['edit_user_session'])
+        # else:
+        #     print("2")
+            # print(request.user.username)
+            # print(request.session['edit_user_session'])
         form = EditProfile(request.POST, instance=request.user)
         if form.is_valid():
             form.save()

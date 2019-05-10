@@ -1,5 +1,4 @@
 from scheduling import views
-from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.conf.urls import url, include
@@ -11,7 +10,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', include('scheduling.urls')), #index page
     path('home/', include('django.contrib.auth.urls')), #login and logout
-    path('admin/', admin.site.urls), #admin portal
     # path('accounts/', include('django.contrib.auth.urls')), 
     # path('users/', include('scheduling.urls')), 
     # path('users/', include('django.contrib.auth.urls')), 

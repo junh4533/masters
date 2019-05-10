@@ -65,8 +65,8 @@
                 <div class="card-body center">
                     <h4 class="card-title">{{ patient.user }}</h4>
                     <p class="card-text">PID: {{ patient.pid }}</p>
-                        <form method="post">
-                            <button type="submit" value="{{patient.user}}"> 
+                        <form method="get">
+                            <button class="btn btn-outline-info" type="submit" value="{{patient.user.username}}" name="edit_profile"> 
                             Edit Profile
                             </button>
                         </form>       

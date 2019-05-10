@@ -126,10 +126,27 @@ def add_patient_info(request):
         return render(request, 'registration/add_user.html', args)
     
 def doctors(request):
-    doctors = Doctor.objects.all()
-    args = {"doctors" : doctors}
-    return render(request, 'scheduling/view_doctors.html', args)
-
+    heading = "Edit Profile"
+    success = "Profile successfully updated."
+    if request.method == 'POST':
+        edit_user = User.objects.get(username = request.session['edit_user_session'])
+        form = EditProfile(request.POST, instance=edit_user)
+        if form.is_valid():
+            request.session['edit_user_session'] = form.cleaned_data['username']
+            form.save()
+            args = {'form':form,'heading':heading,'success':success}
+            return render(request, 'registration/profile.html', args)  
+    elif 'edit_profile' in request.GET:
+        edit_user = User.objects.get(username = request.GET.get('edit_profile'))
+        request.session['edit_user_session'] = request.GET.get('edit_profile')
+        form = EditProfile(instance=edit_user)
+        args = {'form':form,'heading':heading}
+        return render(request, 'registration/profile.html', args) 
+    else:
+        doctors = Doctor.objects.all()
+        args = {"doctors" : doctors}
+        return render(request, 'scheduling/view_doctors.html', args)
+    
 def make_appointments(request):
     data_input = request.GET.get('date')
     if not data_input:
@@ -138,7 +155,12 @@ def make_appointments(request):
         print(data_input, date_object)
     else:
         date_object = parse_date(data_input)
+    
+    # doctors = Doctor.objects.all()
     selected_date = Appointment.objects.filter(date = data_input).values_list('timeslot', flat=True)
+    # available_doctor = Appointment.objects.filter(date = data_input)
+    # print(available_doctor)
+    # available_appointments = [((value, time) for value, time in Appointment.TIMESLOT_LIST if value not in selected_date and if doctor not in available_doctor)]
     available_appointments = [(value, time) for value, time in Appointment.TIMESLOT_LIST if value not in selected_date]
 
     if request.method == 'POST':
